@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom'
 import ResultChart from '../components/ResultChart'
 import ResultCard from '../components/ResultCard'
 import ShareButton from '../components/ShareButton'
-import { addParticle } from '../utils/koreanUtils'
 
 const Result = ({ testData, onRestart }) => {
   const navigate = useNavigate()
@@ -24,10 +23,10 @@ const Result = ({ testData, onRestart }) => {
     return (
       <div className="min-h-screen flex items-center justify-center p-4">
         <div className="text-center">
-          <p className="text-gray-600 mb-4">결과를 불러올 수 없습니다.</p>
+          <p className="text-gray-600 mb-4 font-medium">결과를 불러올 수 없습니다.</p>
           <button 
             onClick={() => navigate('/')}
-            className="bg-blue-500 text-white px-6 py-2 rounded-lg"
+            className="bg-blue-500 text-white px-6 py-2 rounded-lg font-medium"
           >
             홈으로 돌아가기
           </button>
@@ -71,7 +70,7 @@ const Result = ({ testData, onRestart }) => {
           {/* 다시하기 버튼 */}
           <button
             onClick={handleRestart}
-            className="w-full bg-white border-2 border-gray-300 text-gray-700 font-bold py-4 px-6 rounded-lg text-lg hover:border-gray-400 hover:bg-gray-50 transition-all touch-feedback"
+            className="w-full bg-white border-2 border-gray-300 text-gray-700 font-semibold py-4 px-6 rounded-lg text-lg hover:border-gray-400 hover:bg-gray-50 transition-all touch-feedback"
           >
             🔄 다시 테스트하기
           </button>
@@ -86,11 +85,12 @@ const Result = ({ testData, onRestart }) => {
         </div>
 
         {/* 하단 설명 */}
-        <p className="text-gray-500 font-medium">친구들과 함께 테스트해보고</p>
-        <p className="font-medium">서로의 결과를 비교해보세요! 🤝</p>
-        <p className="mt-4 text-xs text-gray-400 font-medium">
-          만든 사람 : @0_min._.00
-        </p>
+        <div className="text-center mt-8 text-sm text-gray-500">
+          <p className="font-medium">친구들과 함께 테스트해보고</p>
+          <p className="font-medium">서로의 결과를 비교해보세요! 🤝</p>
+          <p className="mt-4 text-xs text-gray-400 font-medium">
+            만든 사람 : @0_min._.00
+          </p>
         </div>
       </div>
     </div>
