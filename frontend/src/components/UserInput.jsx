@@ -56,7 +56,7 @@ const UserInput = ({ onStartTest }) => {
             type="text"
             value={nickname}
             onChange={(e) => setNickname(e.target.value)}
-            placeholder="예: 테토킹"
+            placeholder="예: 테토영민"
             className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none transition-colors text-lg"
             maxLength={8}
             disabled={isLoading}
