@@ -1,5 +1,6 @@
 import React from 'react'
 import { getResultText } from '../utils/resultTexts'
+import { addParticle } from '../utils/koreanUtils'
 
 const ResultCard = ({ testData }) => {
   const { nickname, gender, result } = testData
@@ -22,7 +23,7 @@ const ResultCard = ({ testData }) => {
       {/* 메인 결과 */}
       <div className="text-center mb-6">
         <h2 className="text-2xl font-bold mb-2">
-          {nickname}는 {resultText.title}이야!
+          {addParticle(nickname)} {resultText.title}이야!
         </h2>
         <p className="text-lg opacity-90 leading-relaxed">
           {resultText.description}
