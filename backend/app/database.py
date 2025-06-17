@@ -58,6 +58,36 @@ def save_result(db, result_data):
         db.rollback()
         raise e
 
+def get_all_results(db):
+    """모든 테스트 결과 조회"""
+    try:
+        cursor = db.execute('''
+            SELECT id, nickname, gender, teto_score, egen_score, result_type, 
+                   answers, start_time, end_time, created_at
+            FROM test_results 
+            ORDER BY created_at DESC
+        ''')
+        
+        results = []
+        for row in cursor.fetchall():
+            result = {
+                "id": row[0],
+                "nickname": row[1],
+                "gender": row[2],
+                "teto_score": row[3],
+                "egen_score": row[4],
+                "result_type": row[5],
+                "answers": json.loads(row[6]) if row[6] else [],
+                "start_time": row[7],
+                "end_time": row[8],
+                "created_at": row[9]
+            }
+            results.append(result)
+        
+        return results
+    except Exception as e:
+        raise e
+
 def get_stats(db):
     """통계 정보 조회"""
     try:
@@ -83,36 +113,6 @@ def get_stats(db):
         }
     except Exception as e:
         return {"error": str(e)}
-
-+ def get_all_results(db):
-+     """모든 테스트 결과 조회"""
-+     try:
-+         cursor = db.execute('''
-+             SELECT id, nickname, gender, teto_score, egen_score, result_type, 
-+                    answers, start_time, end_time, created_at
-+             FROM test_results 
-+             ORDER BY created_at DESC
-+         ''')
-+         
-+         results = []
-+         for row in cursor.fetchall():
-+             result = {
-+                 "id": row[0],
-+                 "nickname": row[1],
-+                 "gender": row[2],
-+                 "teto_score": row[3],
-+                 "egen_score": row[4],
-+                 "result_type": row[5],
-+                 "answers": json.loads(row[6]) if row[6] else [],
-+                 "start_time": row[7],
-+                 "end_time": row[8],
-+                 "created_at": row[9]
-+             }
-+             results.append(result)
-+         
-+         return results
-+     except Exception as e:
-+         raise e
 
 # 앱 시작 시 데이터베이스 초기화
 init_db()
