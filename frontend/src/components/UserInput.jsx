@@ -57,7 +57,7 @@ const UserInput = ({ onStartTest }) => {
             value={nickname}
             onChange={(e) => setNickname(e.target.value)}
             placeholder="예: 테토영민"
-            className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none transition-colors text-lg"
+            className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:outline-none transition-colors text-lg font-medium"
             maxLength={8}
             disabled={isLoading}
           />
@@ -98,11 +98,15 @@ const UserInput = ({ onStartTest }) => {
           </div>
         </div>
 
+        
+
+        
+
         {/* 시작 버튼 */}
         <button
           type="submit"
           disabled={!nickname.trim() || !gender || isLoading}
-          className="w-full bg-gradient-to-r from-blue-500 to-pink-500 text-white font-bold py-4 px-6 rounded-lg text-lg hover:from-blue-600 hover:to-pink-600 disabled:from-gray-300 disabled:to-gray-400 disabled:cursor-not-allowed transition-all touch-feedback"
+          className="w-full bg-gradient-to-r from-blue-500 to-pink-500 text-white font-semibold py-4 px-6 rounded-lg text-lg hover:from-blue-600 hover:to-pink-600 disabled:from-gray-300 disabled:to-gray-400 disabled:cursor-not-allowed transition-all touch-feedback"
         >
           {isLoading ? (
             <div className="flex items-center justify-center">
