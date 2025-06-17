@@ -19,6 +19,7 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:3000",
         "http://localhost:5173",
+        "https://teto-egen-test.pages.dev",
         "https://*.pages.dev",
         "https://*.cloudflare.com"
     ],
