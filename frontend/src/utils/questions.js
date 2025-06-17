@@ -147,9 +147,9 @@ export const QUESTIONS = [
     id: 17,
     text: "친구랑 약속했는데 30분째 안 와. 연락도 안 받고 있어. 어떻게 할 거야?",
     options: [
-      { text: "계속 전화하고 \"어디야? 언제 와?\" 메시지 보내기", value: "teto", score: 2 },
+      { text: "계속 전화하고 \"어디야? 언제 옴?\" 메시지 보내기", value: "teto", score: 2 },
       { text: "그냥 기다리면서 핸드폰 보기", value: "neutral", score: 0 },
-      { text: "\"괜찮어 천천히 와\" 메시지 보내고 기다리기", value: "egen", score: 2 }
+      { text: "\"괜찮어 천천히 와~\" 메시지 보내고 기다리기", value: "egen", score: 2 }
     ]
   },
   {
