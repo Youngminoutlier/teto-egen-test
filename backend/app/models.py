@@ -15,7 +15,7 @@ class Answer(BaseModel):
 
 class TestResult(BaseModel):
     nickname: str = Field(..., min_length=2, max_length=8)
-    gender: str = Field(..., regex="^(male|female)$")
+    gender: str = Field(..., pattern="^(male|female)$")
     tetoScore: int = Field(..., ge=0, le=100)
     egenScore: int = Field(..., ge=0, le=100)
     resultType: str
