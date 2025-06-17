@@ -44,7 +44,7 @@ const Result = ({ testData, onRestart }) => {
           <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-pink-600 bg-clip-text text-transparent mb-2">
             🎉 테스트 완료!
           </h1>
-          <p className="text-gray-600">
+          <p className="text-gray-600 font-medium">
             {testData.nickname}님의 결과가 나왔어요
           </p>
         </div>
@@ -86,12 +86,11 @@ const Result = ({ testData, onRestart }) => {
         </div>
 
         {/* 하단 설명 */}
-        <div className="text-center mt-8 text-sm text-gray-500">
-          <p>친구들과 함께 테스트해보고</p>
-          <p>서로의 결과를 비교해보세요! 🤝</p>
-          <p className="mt-4 text-xs text-gray-400">
-            만든 사람 : @0_min._.00
-          </p>
+        <p className="text-gray-500 font-medium">친구들과 함께 테스트해보고</p>
+        <p className="font-medium">서로의 결과를 비교해보세요! 🤝</p>
+        <p className="mt-4 text-xs text-gray-400 font-medium">
+          만든 사람 : @0_min._.00
+        </p>
         </div>
       </div>
     </div>
