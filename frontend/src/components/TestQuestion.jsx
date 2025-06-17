@@ -1,8 +1,24 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import ProgressBar from './ProgressBar'
 
 const TestQuestion = ({ question, questionNumber, totalQuestions, onAnswer, isLoading }) => {
   const [selectedAnswer, setSelectedAnswer] = useState(null)
+  const [shuffledOptions, setShuffledOptions] = useState([])
+
+  // 선택지 순서 섞기 함수
+  const shuffleArray = (array) => {
+    const shuffled = [...array]
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+    }
+    return shuffled
+  }
+
+  // 질문이 바뀔 때마다 선택지 순서 랜덤화
+  useEffect(() => {
+    setShuffledOptions(shuffleArray(question.options))
+  }, [question])
 
   const handleAnswerSelect = (answerIndex) => {
     if (isLoading) return
@@ -14,13 +30,16 @@ const TestQuestion = ({ question, questionNumber, totalQuestions, onAnswer, isLo
       navigator.vibrate(50)
     }
 
+    // 선택된 답변의 원본 데이터 가져오기
+    const selectedOption = shuffledOptions[answerIndex]
+
     // 답변 저장하고 다음 질문으로
     setTimeout(() => {
       onAnswer({
         questionId: question.id,
-        selectedOption: question.options[answerIndex],
-        value: question.options[answerIndex].value,
-        score: question.options[answerIndex].score
+        selectedOption: selectedOption,
+        value: selectedOption.value,
+        score: selectedOption.score
       })
       setSelectedAnswer(null)
     }, 500)
@@ -43,11 +62,11 @@ const TestQuestion = ({ question, questionNumber, totalQuestions, onAnswer, isLo
             </h2>
           </div>
 
-          {/* 답변 선택지 */}
+          {/* 답변 선택지 - 이제 랜덤 순서 */}
           <div className="space-y-3">
-            {question.options.map((option, index) => (
+            {shuffledOptions.map((option, index) => (
               <button
-                key={index}
+                key={`${question.id}-${index}-${option.text}`}
                 onClick={() => handleAnswerSelect(index)}
                 disabled={isLoading || selectedAnswer !== null}
                 className={`w-full p-4 text-left border-2 rounded-lg transition-all duration-200 touch-feedback ${
