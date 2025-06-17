@@ -11,7 +11,7 @@ const Admin = () => {
   const [selectedResult, setSelectedResult] = useState(null);
 
   const handleLogin = () => {
-    if (password === 'admin123') {
+    if (password === 'president0min') {
       setIsAuthenticated(true);
     } else {
       alert('비밀번호가 틀렸습니다.');
