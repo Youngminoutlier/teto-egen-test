@@ -42,3 +42,29 @@ export const getStats = async () => {
     throw error;
   }
 };
+
++ export const getAllResults = async () => {
++   try {
++     const response = await fetch(`${API_BASE_URL}/api/admin/results`);
++     if (!response.ok) {
++       throw new Error('결과 조회 실패');
++     }
++     return await response.json();
++   } catch (error) {
++     console.error('결과 조회 오류:', error);
++     throw error;
++   }
++ };
+
++ export const getDetailedStats = async () => {
++   try {
++     const response = await fetch(`${API_BASE_URL}/api/admin/stats`);
++     if (!response.ok) {
++       throw new Error('상세 통계 조회 실패');
++     }
++     return await response.json();
++   } catch (error) {
++     console.error('상세 통계 조회 오류:', error);
++     throw error;
++   }
++ };
