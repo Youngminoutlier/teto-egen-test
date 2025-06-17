@@ -34,10 +34,11 @@ const Test = ({ testData, setTestData }) => {
 
       // 백엔드에 결과 저장 (실패해도 계속 진행)
       try {
-        await submitTestResult(completedTestData);
-        console.log('결과가 서버에 저장되었습니다.');
+        console.log('결과 저장 시도:', completedTestData);
+        const response = await submitTestResult(completedTestData);
+        console.log('결과 저장 성공:', response);
       } catch (error) {
-        console.warn('서버 저장 실패 (로컬 저장은 정상):', error);
+        console.error('서버 저장 실패 (로컬 저장은 정상):', error);
       }
 
       // 결과 페이지로 이동 (약간의 지연 후)
