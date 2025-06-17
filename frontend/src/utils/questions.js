@@ -1,182 +1,182 @@
 export const QUESTIONS = [
   {
     id: 1,
-    text: "스트레스 받을 때 뭐해?",
+    text: "지하철에서 하나 남은 자리에 앉으려고 하는데 다른 사람도 앉으러 오고 있어. 어떻게 할 거야?",
     options: [
-      { text: "운동이나 게임으로 풀어", value: "teto", score: 3 },
-      { text: "음악 듣거나 영화 봐", value: "neutral", score: 0 },
-      { text: "친구랑 수다떨어", value: "egen", score: 3 }
+      { text: "빨리 가서 먼저 앉기", value: "teto", score: 3 },
+      { text: "적당한 속도로 걸으면서 상황 보기", value: "neutral", score: 0 },
+      { text: "그 사람한테 양보하고 그냥 서서 가겠음", value: "egen", score: 3 }
     ]
   },
   {
     id: 2,
-    text: "친구들이 너를 뭐라고 부르는지 알고 있어?",
+    text: "친구가 \"오늘 머리 어때?\"라고 물어봤는데 솔직히 별로야. 뭐라고 대답할 거야?",
     options: [
-      { text: "리더, 형/언니", value: "teto", score: 2 },
-      { text: "재미있는 애", value: "neutral", score: 0 },
-      { text: "착한 애, 듬직한 애", value: "egen", score: 2 }
+      { text: "\"솔직히 구린데? ㅋㅋ 돈 버렸네\"", value: "teto", score: 2 },
+      { text: "\"음... 나쁘지 않은데?\"", value: "neutral", score: 0 },
+      { text: "\"미쳤다 너무 예뻐! 너한테 잘 어울려\"", value: "egen", score: 2 }
     ]
   },
   {
     id: 3,
-    text: "연애할 때 어떤 스타일이야?",
+    text: "썸타는 사람이 이틀째 연락이 없어. 나의 대응은?",
     options: [
-      { text: "내가 먼저 대시하는 편", value: "teto", score: 3 },
-      { text: "상황 봐가며 적당히", value: "neutral", score: 0 },
-      { text: "상대방이 다가와주길 기다려", value: "egen", score: 3 }
+      { text: "먼저 연락해서 \"뭐해? 바빠?\" 직진 어택", value: "teto", score: 3 },
+      { text: "하루 더 기다려보고 자연스럽게 연락", value: "neutral", score: 0 },
+      { text: "혹시 귀찮게 했나.. 마음 접기", value: "egen", score: 3 }
     ]
   },
   {
     id: 4,
-    text: "갈등 상황에서는 어떻게 행동해?",
+    text: "길에서 전 애인을 마주쳤어. 상대방도 나를 봤어. 어떻게 할 거야?",
     options: [
-      { text: "정면으로 맞서서 해결", value: "teto", score: 3 },
-      { text: "상황에 따라 다르게", value: "neutral", score: 0 },
-      { text: "중재하거나 피하려고 해", value: "egen", score: 3 }
+      { text: "당당하게 \"오 안녕?\" 하고 먼저 인사", value: "teto", score: 3 },
+      { text: "애매하게 눈인사만 하고 지나가기", value: "neutral", score: 0 },
+      { text: "못 본 척하고 다른 길로 슬금슬금", value: "egen", score: 3 }
     ]
   },
   {
     id: 5,
-    text: "새로운 도전이 생겼을 때 반응은?",
+    text: "새로운 헬스장에 등록했어. 첫날 어떻게 행동할 거야?",
     options: [
-      { text: "바로 해보자! 일단 시작", value: "teto", score: 3 },
-      { text: "계획 세우고 차근차근", value: "neutral", score: 0 },
-      { text: "신중하게 생각해보고 결정", value: "egen", score: 3 }
+      { text: "일단 무거운 걸로 시작해서 존재감 어필", value: "teto", score: 3 },
+      { text: "적당히 여기저기 둘러보며 파악하기", value: "neutral", score: 0 },
+      { text: "구석에서 조용히 가벼운 것부터 시작", value: "egen", score: 3 }
     ]
   },
   {
     id: 6,
-    text: "팀 프로젝트에서 주로 어떤 역할이야?",
+    text: "음식점에서 주문한 거랑 다른 음식이 나왔어. 근데 그것도 맛있어 보여. 어떻게 할 거야?",
     options: [
-      { text: "팀장이나 발표자", value: "teto", score: 2 },
-      { text: "아이디어 제안하는 사람", value: "neutral", score: 0 },
-      { text: "뒷정리하고 서포트하는 사람", value: "egen", score: 2 }
+      { text: "\"제가 주문한 건 이게 아닌데요?\" 바로 정정 요청", value: "teto", score: 2 },
+      { text: "\"잘못 나왔네; 바꿔달라고 할까?\" 같이 먹는 친구한테 물어보기", value: "neutral", score: 0 },
+      { text: "실수한 것 같지만 조용히 그냥 먹기", value: "egen", score: 2 }
     ]
   },
   {
     id: 7,
-    text: "화나는 일이 있으면 어떻게 해?",
+    text: "친구가 내 SNS 사진에 \"살 왜케 빠졌어?\"라고 댓글 달았어. 사실 안 뺐는데? 보정한 건뎅?",
     options: [
-      { text: "바로 표현하고 해결하려고 해", value: "teto", score: 3 },
-      { text: "시간 두고 생각해봐", value: "neutral", score: 0 },
-      { text: "참고 넘어가거나 다른 사람한테 털어놔", value: "egen", score: 3 }
+      { text: "\"보정빨이야 ㅋㅋ\" 솔직 답변", value: "teto", score: 3 },
+      { text: "\"그런가? ㅎㅎ\" 애매하게 넘어가기", value: "neutral", score: 0 },
+      { text: "\"헤헤 ㅎㅎ 고마워\" 고마워하며 넘어가기", value: "egen", score: 3 }
     ]
   },
   {
     id: 8,
-    text: "친구가 고민 상담할 때 너의 반응은?",
+    text: "친구가 연애 고민상담을 하는데 솔직히 답이 뻔해. 어떻게 반응할 거야?",
     options: [
-      { text: "해결책 제시해주기", value: "teto", score: 2 },
-      { text: "상황에 맞게 조언", value: "neutral", score: 0 },
-      { text: "일단 공감하고 들어주기", value: "egen", score: 2 }
+      { text: "\"그냥 헤어져. 시간 낭비임 ;;\" 직설적 조언", value: "teto", score: 2 },
+      { text: "\"음.. 네 생각은 어때?\" 되묻기", value: "neutral", score: 0 },
+      { text: "\"힘들겠다... 더 얘기해봐 ㅠㅠ\" 공감하며 들어주기", value: "egen", score: 2 }
     ]
   },
   {
     id: 9,
-    text: "경쟁 상황에서는 어떤 모습이야?",
+    text: "치킨 시켜먹는데 다리만 남았어. 다리를 집었는데 친구랑 손이 겹쳤어. 어떻게 할 거야?",
     options: [
-      { text: "이기려고 적극적으로 해", value: "teto", score: 3 },
-      { text: "최선을 다하되 결과는 받아들여", value: "neutral", score: 0 },
-      { text: "다 같이 잘됐으면 좋겠어", value: "egen", score: 3 }
+      { text: "\"내가 먼저 집었음 ㅋ\" 하고 가져가기", value: "teto", score: 3 },
+      { text: "가위바위보나 제비뽑기 제안", value: "neutral", score: 0 },
+      { text: "\"너가 먹어\" 하고 양보하기", value: "egen", score: 3 }
     ]
   },
   {
     id: 10,
-    text: "처음 만나는 사람들 앞에서는?",
+    text: "단톡방에서 민감한 주제로 논쟁이 벌어지고 있어. 나의 선택은?",
     options: [
-      { text: "먼저 말 걸고 분위기 만들어", value: "teto", score: 2 },
-      { text: "상대 성향 보고 맞춰줘", value: "neutral", score: 0 },
-      { text: "조용히 있으면서 관찰해", value: "egen", score: 2 }
+      { text: "내 의견 확실히 표현하고 토론 참여", value: "teto", score: 2 },
+      { text: "적당히 중립적인 의견 하나 던지기", value: "neutral", score: 0 },
+      { text: "읽씹이나 안읽씹하고 나중에 다른 주제로 화제 전환", value: "egen", score: 2 }
     ]
   },
   {
     id: 11,
-    text: "주말에 뭐 하고 싶어?",
+    text: "주말에 침대에 누워있는데 친구가 \"놀러나오자\"고 해. 솔직히 귀찮아.",
     options: [
-      { text: "액티비티나 새로운 곳 가기", value: "teto", score: 2 },
-      { text: "기분에 따라 결정", value: "neutral", score: 0 },
-      { text: "집에서 쉬거나 가까운 사람들과 만나기", value: "egen", score: 2 }
+      { text: "\"귀찮은딩? ㅋ\" 솔직하게 말하고 다음에 만나자고 하기", value: "teto", score: 2 },
+      { text: "\"오늘은 좀...\" 애매하게 거절하기", value: "neutral", score: 0 },
+      { text: "귀찮지만 그래도 친구가 원하니까 나가기", value: "egen", score: 2 }
     ]
   },
   {
     id: 12,
-    text: "중요한 결정을 내릴 때 기준은?",
+    text: "배달음식 주문했는데 1시간 넘게 안 와. 배고프고 짜증나. 어떻게 할 거야?",
     options: [
-      { text: "내 목표와 이익", value: "teto", score: 3 },
-      { text: "합리적 판단", value: "neutral", score: 0 },
-      { text: "주변 사람들에게 미치는 영향", value: "egen", score: 3 }
+      { text: "배달앱으로 \"언제 와요?\" 문의하기", value: "teto", score: 3 },
+      { text: "좀 더 기다려보고 너무 늦으면 연락하기", value: "neutral", score: 0 },
+      { text: "오겄지 하고 그냥 기다리면서 과자로 배 달래기", value: "egen", score: 3 }
     ]
   },
   {
     id: 13,
-    text: "실수했을 때 반응은?",
+    text: "길에서 넘어졌는데 사람들이 쳐다봐. 어떻게 반응할 거야?",
     options: [
-      { text: "빨리 수습하고 다음엔 안 그러면 돼", value: "teto", score: 2 },
-      { text: "원인 분석하고 개선점 찾기", value: "neutral", score: 0 },
-      { text: "미안하다고 계속 사과해", value: "egen", score: 2 }
+      { text: "의도한 것처럼 자연스럽게 춤추면서 일어나기", value: "teto", score: 2 },
+      { text: "빨리 일어나서 무릎 털고 자연스럽게 가던 길 가기", value: "neutral", score: 0 },
+      { text: "얼굴 빨개져서 앞만 보고 후다닥 도망가기", value: "egen", score: 2 }
     ]
   },
   {
     id: 14,
-    text: "성공했을 때 어떤 기분이야?",
+    text: "시험 봤는데 생각보다 잘 본 것 같아. 친구들한테 뭐라고 할 거야?",
     options: [
-      { text: "뿌듯하고 다음 목표 생각해", value: "teto", score: 2 },
-      { text: "만족하면서도 겸손하게", value: "neutral", score: 0 },
-      { text: "도와준 사람들한테 고마워해", value: "egen", score: 2 }
+      { text: "\"이번에 셤 개잘본듯 ㅋㅋ\" 솔직하게", value: "teto", score: 2 },
+      { text: "\"그럭저럭...?\" 애매하게 답하기", value: "neutral", score: 0 },
+      { text: "\"망했어ㅠㅠ\" 겸손하게(?) 답하기", value: "egen", score: 2 }
     ]
   },
   {
     id: 15,
-    text: "위험한 상황에서는?",
+    text: "엘리베이터에서 닫힘 버튼을 눌렀는데 뛰어오는 사람이 보여. 어떻게 할 거야?",
     options: [
-      { text: "일단 맞서보고 해결하려고 해", value: "teto", score: 3 },
-      { text: "상황 판단하고 행동", value: "neutral", score: 0 },
-      { text: "안전한 방법 찾거나 도움 요청", value: "egen", score: 3 }
+      { text: "이미 늦었어~ 다음 거 타라고 생각하기", value: "teto", score: 3 },
+      { text: "어쩔 수 없다고 생각하며 열림 버튼 누르기", value: "neutral", score: 0 },
+      { text: "급하게 열림 버튼 누르고 잡아주며 기다려주기", value: "egen", score: 3 }
     ]
   },
   {
     id: 16,
-    text: "친구와 의견이 다를 때는?",
+    text: "친구랑 영화 보는데 내가 보고 싶었던 거랑 친구가 보고 싶은 게 달라. 어떻게 할 거야?",
     options: [
-      { text: "내 의견을 확실히 말해", value: "teto", score: 2 },
-      { text: "서로 얘기해보고 절충점 찾기", value: "neutral", score: 0 },
-      { text: "친구 의견도 이해하려고 노력해", value: "egen", score: 2 }
+      { text: "\"근데 이 영화는 안 보면 후회함 ㄹㅇ\" 내가 보고 싶은 영화 보자고 주장하기", value: "teto", score: 2 },
+      { text: "\"리뷰 좀 봐볼까?\" 하고 친구랑 같이 골라보기", value: "neutral", score: 0 },
+      { text: "그냥 친구가 보고 싶어하는 걸로 양보하기", value: "egen", score: 2 }
     ]
   },
   {
     id: 17,
-    text: "힘든 일이 있을 때 누구한테 얘기해?",
+    text: "친구랑 약속했는데 30분째 안 와. 연락도 안 받고 있어. 어떻게 할 거야?",
     options: [
-      { text: "혼자 해결하려고 해", value: "teto", score: 2 },
-      { text: "상황에 따라 다르게", value: "neutral", score: 0 },
-      { text: "가까운 사람들한테 털어놔", value: "egen", score: 2 }
+      { text: "계속 전화하고 \"어디야? 언제 와?\" 메시지 보내기", value: "teto", score: 2 },
+      { text: "그냥 기다리면서 핸드폰 보기", value: "neutral", score: 0 },
+      { text: "\"괜찮어 천천히 와\" 메시지 보내고 기다리기", value: "egen", score: 2 }
     ]
   },
   {
     id: 18,
-    text: "그룹에서 분위기가 안 좋을 때는?",
+    text: "모임에서 분위기가 어색해졌어. 갑자기 조용해진 상황. 어떻게 할 거야?",
     options: [
-      { text: "문제를 직접적으로 해결하려고 해", value: "teto", score: 3 },
-      { text: "상황 지켜보다가 필요하면 개입", value: "neutral", score: 0 },
-      { text: "분위기 전환하거나 중재 역할", value: "egen", score: 3 }
+      { text: "\"갑자기 왜케 조용해?\" 하고 분위기 깨기", value: "teto", score: 3 },
+      { text: "조용히 핸드폰 보면서 상황 지켜보기", value: "neutral", score: 0 },
+      { text: "\"음악 틀까?\" 하고 분위기 전환 시도", value: "egen", score: 3 }
     ]
   },
   {
     id: 19,
-    text: "목표를 이루는 방식은?",
+    text: "인스타 스토리에 뭘 올릴지 고민이야. 어떤 걸 선택할 거야?",
     options: [
-      { text: "빠르고 효율적으로", value: "teto", score: 2 },
-      { text: "계획적이고 체계적으로", value: "neutral", score: 0 },
-      { text: "협력하면서 함께", value: "egen", score: 2 }
+      { text: "내 일상 자랑하는 멋있는 사진", value: "teto", score: 2 },
+      { text: "무난한 음식 사진이나 풍경", value: "neutral", score: 0 },
+      { text: "친구들이나 다른 사람들이 나온 재밌는 사진", value: "egen", score: 2 }
     ]
   },
   {
     id: 20,
-    text: "마지막 질문이야! 지금 기분은?",
+    text: "드디어 마지막 질문이야! 이 테스트 어땠어?",
     options: [
-      { text: "빨리 결과 보고 싶어!", value: "teto", score: 2 },
-      { text: "궁금하긴 한데 어떨지 모르겠어", value: "neutral", score: 0 },
-      { text: "좀 떨리는데 재밌었어", value: "egen", score: 2 }
+      { text: "꿀잼! 빨리 결과 보고 싶어", value: "teto", score: 2 },
+      { text: "그럭저럭 괜찮네, 결과가 궁금하긴 해", value: "neutral", score: 0 },
+      { text: "재밌었어~ 친구들도 해보라고 해야지", value: "egen", score: 2 }
     ]
   }
 ]
