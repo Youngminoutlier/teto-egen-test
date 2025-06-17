@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        'sans': ['Apple SD Gothic Neo', 'Pretendard', 'system-ui', 'sans-serif']
+        'sans': ['Pretendard Variable', 'Pretendard', 'Noto Sans KR', 'Apple SD Gothic Neo', 'system-ui', 'sans-serif']
       },
       colors: {
         'teto': {
