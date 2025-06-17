@@ -3,9 +3,9 @@ export const QUESTIONS = [
     id: 1,
     text: "지하철에서 하나 남은 자리에 앉으려고 하는데 다른 사람도 앉으러 오고 있어. 어떻게 할 거야?",
     options: [
-      { text: "빨리 가서 먼저 앉기", value: "teto", score: 3 },
-      { text: "적당한 속도로 걸으면서 상황 보기", value: "neutral", score: 0 },
-      { text: "그 사람한테 양보하고 그냥 서서 가겠음", value: "egen", score: 3 }
+      { text: "빨리 가서 먼저 앉는 편임", value: "teto", score: 3 },
+      { text: "적당한 속도로 걸으면서 상황 보는 편임", value: "neutral", score: 0 },
+      { text: "그 사람한테 양보하고 그냥 서서 간다", value: "egen", score: 3 }
     ]
   },
   {
