@@ -9,6 +9,16 @@ export default {
       fontFamily: {
         'sans': ['Pretendard Variable', 'Pretendard', 'Noto Sans KR', 'Apple SD Gothic Neo', 'system-ui', 'sans-serif']
       },
+      fontWeight: {
+        'thin': '500',      // thin을 500으로 리매핑
+        'light': '500',     // light를 500으로 리매핑
+        'normal': '500',    // normal을 500으로 리매핑
+        'medium': '500',    // medium은 그대로 500
+        'semibold': '600',  // semibold는 600
+        'bold': '700',      // bold는 700
+        'extrabold': '800', // extrabold는 800
+        'black': '900',     // black은 900
+      },
       colors: {
         'teto': {
           50: '#eff6ff',
