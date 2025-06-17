@@ -24,6 +24,20 @@ jobs:
           cd frontend
           npm install
           
+      - name: Debug - Check file structure
+        run: |
+          cd frontend
+          echo "=== Current directory ==="
+          pwd
+          echo "=== Listing all files ==="
+          ls -la
+          echo "=== Checking public directory ==="
+          ls -la public/
+          echo "=== Checking src directory ==="
+          ls -la src/
+          echo "=== Checking if index.html exists ==="
+          test -f public/index.html && echo "index.html EXISTS" || echo "index.html MISSING"
+          
       - name: Build
         run: |
           cd frontend
