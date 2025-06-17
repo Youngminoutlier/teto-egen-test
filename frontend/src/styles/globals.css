@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', 'Pretendard', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 터치 피드백 효과 */
+.touch-feedback {
+  transition: all 0.15s ease;
+}
+
+.touch-feedback:active {
+  transform: scale(0.98);
+  opacity: 0.8;
+}
+
+/* 커스텀 스크롤바 */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+/* 모바일 터치 개선 */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button, input {
+  outline: none;
+  -webkit-appearance: none;
+}
+
+/* 로딩 애니메이션 */
+.loading-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: .5;
+  }
+}
+
+/* 결과 카드 그라데이션 */
+.result-gradient-teto {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.result-gradient-egen {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.result-gradient-balance {
+  background: linear-gradient(135deg, #667eea 0%, #f093fb 50%, #764ba2 100%);
+}
