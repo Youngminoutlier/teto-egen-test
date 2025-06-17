@@ -4,7 +4,7 @@ from fastapi.responses import JSONResponse
 import uvicorn
 import os
 from datetime import datetime
-from .database import get_db, save_result
+from .database import get_db, save_result, get_all_results
 from .models import TestResult
 
 app = FastAPI(
@@ -79,6 +79,56 @@ async def get_stats():
         }
     except Exception as e:
         return {"total_tests": 0, "message": "통계를 불러올 수 없습니다."}
+
++ @app.get("/api/admin/results")
++ async def get_all_test_results():
++     """모든 테스트 결과 조회 (관리자용)"""
++     try:
++         db = get_db()
++         results = get_all_results(db)
++         db.close()
++         
++         return {
++             "success": True,
++             "results": results
++         }
++     except Exception as e:
++         raise HTTPException(status_code=500, detail=f"결과 조회 실패: {str(e)}")
+
++ @app.get("/api/admin/stats")
++ async def get_detailed_stats():
++     """상세한 통계 정보 (관리자용)"""
++     try:
++         db = get_db()
++         
++         # 전체 통계
++         total_results = db.execute("SELECT COUNT(*) FROM test_results").fetchone()[0]
++         
++         # 성별별 통계
++         male_count = db.execute("SELECT COUNT(*) FROM test_results WHERE gender = 'male'").fetchone()[0]
++         female_count = db.execute("SELECT COUNT(*) FROM test_results WHERE gender = 'female'").fetchone()[0]
++         
++         # 결과 타입별 통계
++         legend_teto_count = db.execute("SELECT COUNT(*) FROM test_results WHERE result_type = 'legend_teto'").fetchone()[0]
++         teto_count = db.execute("SELECT COUNT(*) FROM test_results WHERE result_type = 'teto'").fetchone()[0]
++         balance_count = db.execute("SELECT COUNT(*) FROM test_results WHERE result_type = 'balance'").fetchone()[0]
++         egen_count = db.execute("SELECT COUNT(*) FROM test_results WHERE result_type = 'egen'").fetchone()[0]
++         legend_egen_count = db.execute("SELECT COUNT(*) FROM test_results WHERE result_type = 'legend_egen'").fetchone()[0]
++         
++         db.close()
++         
++         return {
++             "total_tests": total_results,
++             "male_count": male_count,
++             "female_count": female_count,
++             "legend_teto_count": legend_teto_count,
++             "teto_count": teto_count,
++             "balance_count": balance_count,
++             "egen_count": egen_count,
++             "legend_egen_count": legend_egen_count
++         }
++     except Exception as e:
++         raise HTTPException(status_code=500, detail=f"통계 조회 실패: {str(e)}")
 
 @app.exception_handler(404)
 async def not_found_handler(request, exc):
