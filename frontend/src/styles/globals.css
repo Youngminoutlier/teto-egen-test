@@ -4,8 +4,34 @@
 
 body {
   font-family: 'Pretendard Variable', 'Pretendard', 'Noto Sans KR', 'Apple SD Gothic Neo', system-ui, sans-serif;
+  font-weight: 500; /* 기본 폰트 웨이트를 500으로 설정 */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* 전역 폰트 웨이트 설정 - 500 이상만 사용 */
+* {
+  font-weight: 500; /* 모든 요소의 기본 웨이트를 500으로 */
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700; /* 제목들은 700으로 */
+}
+
+.font-medium {
+  font-weight: 500 !important;
+}
+
+.font-semibold {
+  font-weight: 600 !important;
+}
+
+.font-bold {
+  font-weight: 700 !important;
+}
+
+.font-extrabold {
+  font-weight: 800 !important;
 }
 
 /* 터치 피드백 효과 */
@@ -76,6 +102,7 @@ button, input {
 .result-card-text {
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   font-family: 'Pretendard Variable', 'Pretendard', 'Noto Sans KR', sans-serif;
+  font-weight: 500; /* 기본 텍스트는 500 */
 }
 
 /* 결과 카드 제목 */
@@ -90,4 +117,18 @@ button, input {
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
   font-family: 'Pretendard Variable', 'Pretendard', 'Noto Sans KR', sans-serif;
   font-weight: 600;
+}
+
+/* 기본 텍스트 요소들 모두 500 이상으로 */
+p, span, div, li, button, input, label {
+  font-weight: 500;
+}
+
+/* 강조가 필요한 요소들 */
+.font-strong {
+  font-weight: 600;
+}
+
+.font-very-strong {
+  font-weight: 700;
 }
