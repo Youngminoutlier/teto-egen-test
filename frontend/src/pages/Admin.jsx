@@ -9,7 +9,7 @@ const Admin = () => {
 
   const handleLogin = () => {
     // 간단한 비밀번호 확인 (실제로는 더 보안적인 방법 사용)
-    if (password === 'admin123') {
+    if (password === 'president0min') {
       setIsAuthenticated(true);
     } else {
       alert('비밀번호가 틀렸습니다.');
