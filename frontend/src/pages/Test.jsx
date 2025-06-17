@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import TestQuestion from '../components/TestQuestion'
 import { QUESTIONS } from '../utils/questions'
 import { calculateResult } from '../utils/calculateResult'
+import { submitTestResult } from '../utils/api'
 
 const Test = ({ testData, setTestData }) => {
   const [currentQuestion, setCurrentQuestion] = useState(testData.currentQuestion)
@@ -30,6 +31,14 @@ const Test = ({ testData, setTestData }) => {
       }
 
       setTestData(completedTestData)
+
+      // 백엔드에 결과 저장 (실패해도 계속 진행)
+      try {
+        await submitTestResult(completedTestData);
+        console.log('결과가 서버에 저장되었습니다.');
+      } catch (error) {
+        console.warn('서버 저장 실패 (로컬 저장은 정상):', error);
+      }
 
       // 결과 페이지로 이동 (약간의 지연 후)
       setTimeout(() => {
