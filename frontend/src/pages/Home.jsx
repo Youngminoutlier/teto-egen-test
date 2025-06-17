@@ -21,12 +21,12 @@ const Home = ({ onStartTest }) => {
           <div className="bg-blue-100 p-4 rounded-lg text-center">
             <div className="text-2xl mb-2">⚡</div>
             <div className="text-sm font-medium text-blue-800">테토 성향</div>
-            <div className="text-xs text-blue-600">적극적, 도전적</div>
+            <div className="text-xs text-blue-600">직진, 쿨함, 어쩌라고 ㅋ</div>
           </div>
           <div className="bg-pink-100 p-4 rounded-lg text-center">
             <div className="text-2xl mb-2">💝</div>
             <div className="text-sm font-medium text-pink-800">에겐 성향</div>
-            <div className="text-xs text-pink-600">공감적, 협력적</div>
+            <div className="text-xs text-pink-600">공감, 배려, 어떡해ㅠㅠ</div>
           </div>
         </div>
 
