@@ -27,20 +27,20 @@ const ResultCard = ({ testData }) => {
     <div className={`rounded-2xl p-6 text-white ${getGradientClass()}`}>
       {/* 메인 결과 */}
       <div className="text-center mb-6">
-        <h2 className="text-2xl font-bold mb-2">
+        <h2 className="text-2xl font-bold mb-2 result-card-title">
           {addParticle(nickname)} {resultText.title}{getEndingParticle(resultText.title)}!
         </h2>
-        <p className="text-lg opacity-90 leading-relaxed">
+        <p className="text-lg opacity-95 leading-relaxed result-card-text">
           {resultText.description}
         </p>
       </div>
 
       {/* 특징 */}
       <div className="mb-6">
-        <h3 className="text-lg font-bold mb-3">🔥 주요 특징</h3>
+        <h3 className="text-lg font-bold mb-3 result-section-title">🔥 주요 특징</h3>
         <ul className="space-y-2">
           {resultText.traits.map((trait, index) => (
-            <li key={index} className="text-sm opacity-90">
+            <li key={index} className="text-sm opacity-95 result-card-text leading-relaxed">
               • {trait}
             </li>
           ))}
@@ -49,10 +49,10 @@ const ResultCard = ({ testData }) => {
 
       {/* 추천 활동 */}
       <div className="mb-6">
-        <h3 className="text-lg font-bold mb-3">💡 추천 활동</h3>
+        <h3 className="text-lg font-bold mb-3 result-section-title">💡 추천 활동</h3>
         <ul className="space-y-2">
           {resultText.activities.map((activity, index) => (
-            <li key={index} className="text-sm opacity-90">
+            <li key={index} className="text-sm opacity-95 result-card-text leading-relaxed">
               • {activity}
             </li>
           ))}
@@ -61,23 +61,23 @@ const ResultCard = ({ testData }) => {
 
       {/* 연애 스타일 */}
       <div className="mb-6">
-        <h3 className="text-lg font-bold mb-3">💕 연애 스타일</h3>
-        <p className="text-sm opacity-90 leading-relaxed">
+        <h3 className="text-lg font-bold mb-3 result-section-title">💕 연애 스타일</h3>
+        <p className="text-sm opacity-95 leading-relaxed result-card-text">
           {resultText.loveStyle}
         </p>
       </div>
 
       {/* 직업 적성 */}
       <div className="mb-6">
-        <h3 className="text-lg font-bold mb-3">💼 직업 적성</h3>
-        <p className="text-sm opacity-90 leading-relaxed">
+        <h3 className="text-lg font-bold mb-3 result-section-title">💼 직업 적성</h3>
+        <p className="text-sm opacity-95 leading-relaxed result-card-text">
           {resultText.jobFit}
         </p>
       </div>
 
       {/* 마무리 멘트 */}
-      <div className="bg-white bg-opacity-20 rounded-lg p-4">
-        <p className="text-sm leading-relaxed">
+      <div className="bg-white bg-opacity-20 rounded-lg p-4 backdrop-blur-sm">
+        <p className="text-sm leading-relaxed result-card-text">
           {resultText.finalComment}
         </p>
       </div>
