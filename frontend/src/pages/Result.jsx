@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import ResultChart from '../components/ResultChart'
 import ResultCard from '../components/ResultCard'
 import ShareButton from '../components/ShareButton'
-+ import { addParticle } from '../utils/koreanUtils'
+import { addParticle } from '../utils/koreanUtils'
 
 const Result = ({ testData, onRestart }) => {
   const navigate = useNavigate()
@@ -89,9 +89,9 @@ const Result = ({ testData, onRestart }) => {
         <div className="text-center mt-8 text-sm text-gray-500">
           <p>친구들과 함께 테스트해보고</p>
           <p>서로의 결과를 비교해보세요! 🤝</p>
-+         <p className="mt-4 text-xs text-gray-400">
-+           만든 사람 : @0_min._.00
-+         </p>
+          <p className="mt-4 text-xs text-gray-400">
+            만든 사람 : @0_min._.00
+          </p>
         </div>
       </div>
     </div>
