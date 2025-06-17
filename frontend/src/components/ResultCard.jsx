@@ -18,12 +18,17 @@ const ResultCard = ({ testData }) => {
     }
   }
 
+  // '녀'로 끝나는지 확인하는 함수
+  const getEndingParticle = (title) => {
+    return title.endsWith('녀') ? '야' : '이야'
+  }
+
   return (
     <div className={`rounded-2xl p-6 text-white ${getGradientClass()}`}>
       {/* 메인 결과 */}
       <div className="text-center mb-6">
         <h2 className="text-2xl font-bold mb-2">
-          {addParticle(nickname)} {resultText.title}이야!
+          {addParticle(nickname)} {resultText.title}{getEndingParticle(resultText.title)}!
         </h2>
         <p className="text-lg opacity-90 leading-relaxed">
           {resultText.description}
