@@ -39,13 +39,15 @@ const ResultCard = ({ testData }) => {
     <div className={`rounded-2xl p-6 text-white ${getGradientClass()}`}>
       {/* 메인 결과 */}
       <div className="text-center mb-6">
-        {/* 첫 번째 제목 - 크기 0.5pt 더 키움 */}
-        <h2 className="text-2xl font-extrabold mb-2 result-card-title leading-tight">
+        {/* 첫 번째 제목 - text-xl(1.25rem)과 text-2xl(1.5rem) 사이 크기 */}
+        <h2 className="font-extrabold mb-2 result-card-title leading-tight" 
+            style={{ fontSize: '1.375rem' }}>
           {addParticle(nickname)} {resultText.title}{getEndingParticle(resultText.title)}!
         </h2>
         
-        {/* 두 번째 설명 - 폰트 웨이트 굵게 */}
-        <p className="text-base font-semibold opacity-95 leading-relaxed result-card-text">
+        {/* 두 번째 설명 - 텍스트 크기 살짝 키움 */}
+        <p className="font-semibold opacity-95 leading-relaxed result-card-text"
+           style={{ fontSize: '1.125rem' }}>
           {resultText.description.split('\n').map((line, index) => (
             <span key={index}>
               {line}
