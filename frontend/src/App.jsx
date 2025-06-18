@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import Home from './pages/Home'
 import Test from './pages/Test'
 import Result from './pages/Result'
+import Admin from './pages/Admin'
 
 const App = () => {
   const [testData, setTestData] = useState(null)
