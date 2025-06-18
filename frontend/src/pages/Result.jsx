@@ -8,11 +8,29 @@ const Result = ({ testData, onRestart }) => {
   const navigate = useNavigate()
 
   useEffect(() => {
+    // 테스트 데이터가 없으면 localStorage에서 재시도
+    if (!testData || !testData.result) {
+      console.log('테스트 데이터 없음, localStorage에서 복원 시도')
+      try {
+        const saved = localStorage.getItem('tetoEgenTestData')
+        if (saved) {
+          const parsedData = JSON.parse(saved)
+          if (parsedData && parsedData.completed) {
+            console.log('localStorage에서 데이터 복원 성공')
+            // 부모 컴포넌트에 데이터 전달하는 방법이 필요함
+            // 또는 여기서 직접 상태 관리
+          }
+        }
+      } catch (error) {
+        console.error('데이터 복원 실패:', error)
+      }
+    }
+
     // 결과 페이지 진입 시 햅틱 피드백
     if (navigator.vibrate) {
       navigator.vibrate([100, 50, 100])
     }
-  }, [])
+  }, [testData])
 
   const handleRestart = () => {
     onRestart()
