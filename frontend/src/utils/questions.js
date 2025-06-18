@@ -12,7 +12,7 @@ export const QUESTIONS = [
     id: 2,
     text: "친구가 \"오늘 머리 어때?\"라고 물어봤는데 솔직히 별로야. 뭐라고 대답할 거야?",
     options: [
-      { text: "\"솔직히 구린데? ㅋㅋ 돈 버렸네\"", value: "teto", score: 2 },
+      { text: "\"왜 이렇게 잘랐어 ㅋㅋ 솔직히 별로임\"", value: "teto", score: 2 },
       { text: "\"음... 나쁘지 않은데?\"", value: "neutral", score: 0 },
       { text: "\"미쳤다 너무 예뻐! 너한테 잘 어울려\"", value: "egen", score: 2 }
     ]
