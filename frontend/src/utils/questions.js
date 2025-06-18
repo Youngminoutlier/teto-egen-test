@@ -158,7 +158,7 @@ export const QUESTIONS = [
     options: [
       { text: "\"갑자기 왜케 조용해?\" 하고 분위기 깨기", value: "teto", score: 3 },
       { text: "조용히 핸드폰 보면서 상황 지켜보기", value: "neutral", score: 0 },
-      { text: "\"음악 틀까?\" 하고 분위기 전환 시도", value: "egen", score: 3 }
+      { text: "\"음악 틀까?\" 하고 자연스러운 분위기 전환 시도", value: "egen", score: 3 }
     ]
   },
   {
