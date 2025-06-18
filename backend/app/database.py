@@ -1,118 +1,143 @@
-import sqlite3
 import os
-from datetime import datetime
 import json
+from datetime import datetime
+from sqlalchemy import create_engine, text, Column, Integer, String, DateTime
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
 
-DATABASE_URL = "test_results.db"
+# 환경에 따른 DATABASE_URL 설정
+DATABASE_URL = os.environ.get('DATABASE_URL')
+
+if not DATABASE_URL:
+    # 로컬 개발환경용 SQLite
+    DATABASE_URL = 'sqlite:///./test_results.db'
+elif DATABASE_URL.startswith('postgres://'):
+    # Render.com PostgreSQL URL 수정
+    DATABASE_URL = DATABASE_URL.replace('postgres://', 'postgresql://', 1)
+
+# SQLAlchemy 엔진 생성
+if DATABASE_URL.startswith('sqlite'):
+    engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
+else:
+    engine = create_engine(DATABASE_URL)
+
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+Base = declarative_base()
+
+# 테이블 모델 정의
+class TestResult(Base):
+    __tablename__ = "test_results"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    nickname = Column(String, nullable=False)
+    gender = Column(String, nullable=False)
+    teto_score = Column(Integer, nullable=False)
+    egen_score = Column(Integer, nullable=False)
+    result_type = Column(String, nullable=False)
+    answers = Column(String)  # JSON string
+    start_time = Column(String)
+    end_time = Column(String)
+    created_at = Column(DateTime, default=datetime.utcnow)
 
 def get_db():
-    """데이터베이스 연결"""
-    conn = sqlite3.connect(DATABASE_URL)
-    conn.row_factory = sqlite3.Row
-    return conn
+    """데이터베이스 세션 생성"""
+    db = SessionLocal()
+    try:
+        return db
+    finally:
+        pass  # 세션은 호출하는 곳에서 닫아야 함
 
 def init_db():
-    """데이터베이스 초기화"""
-    conn = get_db()
-    
-    # 테스트 결과 테이블 생성
-    conn.execute('''
-        CREATE TABLE IF NOT EXISTS test_results (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            nickname TEXT NOT NULL,
-            gender TEXT NOT NULL CHECK (gender IN ('male', 'female')),
-            teto_score INTEGER NOT NULL CHECK (teto_score >= 0 AND teto_score <= 100),
-            egen_score INTEGER NOT NULL CHECK (egen_score >= 0 AND egen_score <= 100),
-            result_type TEXT NOT NULL,
-            answers TEXT,
-            start_time TEXT,
-            end_time TEXT,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        )
-    ''')
-    
-    conn.commit()
-    conn.close()
+    """데이터베이스 테이블 생성"""
+    try:
+        Base.metadata.create_all(bind=engine)
+        print("데이터베이스 테이블이 생성되었습니다.")
+    except Exception as e:
+        print(f"데이터베이스 초기화 오류: {e}")
 
 def save_result(db, result_data):
     """테스트 결과 저장"""
     try:
-        cursor = db.execute('''
-            INSERT INTO test_results 
-            (nickname, gender, teto_score, egen_score, result_type, answers, start_time, end_time)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-        ''', (
-            result_data['nickname'],
-            result_data['gender'],
-            result_data['tetoScore'],
-            result_data['egenScore'],
-            result_data['resultType'],
-            json.dumps(result_data.get('answers', [])),
-            result_data.get('startTime'),
-            result_data.get('endTime')
-        ))
+        db_result = TestResult(
+            nickname=result_data['nickname'],
+            gender=result_data['gender'],
+            teto_score=result_data['tetoScore'],
+            egen_score=result_data['egenScore'],
+            result_type=result_data['resultType'],
+            answers=json.dumps(result_data.get('answers', [])),
+            start_time=result_data.get('startTime'),
+            end_time=result_data.get('endTime')
+        )
         
+        db.add(db_result)
         db.commit()
-        return cursor.lastrowid
+        db.refresh(db_result)
+        
+        return db_result.id
     except Exception as e:
         db.rollback()
         raise e
+    finally:
+        db.close()
 
 def get_all_results(db):
     """모든 테스트 결과 조회"""
     try:
-        cursor = db.execute('''
-            SELECT id, nickname, gender, teto_score, egen_score, result_type, 
-                   answers, start_time, end_time, created_at
-            FROM test_results 
-            ORDER BY created_at DESC
-        ''')
+        results = db.query(TestResult).order_by(TestResult.created_at.desc()).all()
         
-        results = []
-        for row in cursor.fetchall():
-            result = {
-                "id": row[0],
-                "nickname": row[1],
-                "gender": row[2],
-                "teto_score": row[3],
-                "egen_score": row[4],
-                "result_type": row[5],
-                "answers": json.loads(row[6]) if row[6] else [],
-                "start_time": row[7],
-                "end_time": row[8],
-                "created_at": row[9]
+        result_list = []
+        for result in results:
+            result_dict = {
+                "id": result.id,
+                "nickname": result.nickname,
+                "gender": result.gender,
+                "teto_score": result.teto_score,
+                "egen_score": result.egen_score,
+                "result_type": result.result_type,
+                "answers": json.loads(result.answers) if result.answers else [],
+                "start_time": result.start_time,
+                "end_time": result.end_time,
+                "created_at": result.created_at.isoformat() if result.created_at else None
             }
-            results.append(result)
+            result_list.append(result_dict)
         
-        return results
+        return result_list
     except Exception as e:
         raise e
+    finally:
+        db.close()
 
-def get_stats(db):
-    """통계 정보 조회"""
+def get_detailed_stats(db):
+    """상세한 통계 정보 조회"""
     try:
-        # 전체 테스트 수
-        total = db.execute("SELECT COUNT(*) FROM test_results").fetchone()[0]
+        # 전체 통계
+        total_results = db.query(TestResult).count()
         
         # 성별별 통계
-        male_count = db.execute("SELECT COUNT(*) FROM test_results WHERE gender = 'male'").fetchone()[0]
-        female_count = db.execute("SELECT COUNT(*) FROM test_results WHERE gender = 'female'").fetchone()[0]
+        male_count = db.query(TestResult).filter(TestResult.gender == 'male').count()
+        female_count = db.query(TestResult).filter(TestResult.gender == 'female').count()
         
         # 결과 타입별 통계
-        teto_count = db.execute("SELECT COUNT(*) FROM test_results WHERE result_type LIKE '%teto%'").fetchone()[0]
-        egen_count = db.execute("SELECT COUNT(*) FROM test_results WHERE result_type LIKE '%egen%'").fetchone()[0]
-        balance_count = db.execute("SELECT COUNT(*) FROM test_results WHERE result_type = 'balance'").fetchone()[0]
+        legend_teto_count = db.query(TestResult).filter(TestResult.result_type == 'legend_teto').count()
+        teto_count = db.query(TestResult).filter(TestResult.result_type == 'teto').count()
+        balance_count = db.query(TestResult).filter(TestResult.result_type == 'balance').count()
+        egen_count = db.query(TestResult).filter(TestResult.result_type == 'egen').count()
+        legend_egen_count = db.query(TestResult).filter(TestResult.result_type == 'legend_egen').count()
         
         return {
-            "total_tests": total,
+            "total_tests": total_results,
             "male_count": male_count,
             "female_count": female_count,
+            "legend_teto_count": legend_teto_count,
             "teto_count": teto_count,
+            "balance_count": balance_count,
             "egen_count": egen_count,
-            "balance_count": balance_count
+            "legend_egen_count": legend_egen_count
         }
     except Exception as e:
-        return {"error": str(e)}
+        raise e
+    finally:
+        db.close()
 
 # 앱 시작 시 데이터베이스 초기화
 init_db()
