@@ -11,7 +11,7 @@ const Admin = () => {
   const [selectedResult, setSelectedResult] = useState(null);
 
   const handleLogin = () => {
-    if (password === 'president0min') {
+    if (password === 'admin123') {
       setIsAuthenticated(true);
     } else {
       alert('비밀번호가 틀렸습니다.');
@@ -20,15 +20,24 @@ const Admin = () => {
 
   const fetchData = async () => {
     setLoading(true);
+    console.log('=== 관리자 데이터 조회 시작 ===');
+    console.log('API Base URL:', import.meta.env.VITE_API_URL);
+    
     try {
       const [statsData, resultsData] = await Promise.all([
         getDetailedStats(),
         getAllResults()
       ]);
+      
+      console.log('받은 통계 데이터:', statsData);
+      console.log('받은 결과 데이터:', resultsData);
+      console.log('결과 개수:', resultsData.results?.length || 0);
+      
       setStats(statsData);
       setResults(resultsData.results || []);
     } catch (error) {
       console.error('데이터 조회 실패:', error);
+      alert(`데이터 조회 실패: ${error.message}`);
     } finally {
       setLoading(false);
     }
@@ -265,72 +274,72 @@ const Admin = () => {
           <div className="bg-white rounded-lg shadow-md">
             <div className="p-6 border-b">
               <h2 className="text-xl font-semibold">테스트 결과 목록 ({results.length}개)</h2>
-            </div>
-            
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">ID</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">닉네임</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">성별</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">결과</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">점수</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">완료 시간</th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">상세</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200">
-                  {results.map((result) => (
-                    <tr key={result.id} className="hover:bg-gray-50">
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                        {result.id}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {result.nickname}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {result.gender === 'male' ? '👨 남성' : '👩 여성'}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {getResultTypeKorean(result.result_type, result.gender)}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        테토 {result.teto_score}% / 에겐 {result.egen_score}%
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {formatDate(result.created_at)}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm">
-                        <button
-                          onClick={() => setSelectedResult(result)}
-                          className="bg-blue-500 text-white px-3 py-1 rounded text-xs hover:bg-blue-600 transition-colors"
-                        >
-                          상세보기
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-              
-              {results.length === 0 && (
-                <div className="text-center py-12 text-gray-500">
-                  아직 테스트 결과가 없습니다.
-                </div>
-              )}
-            </div>
-          </div>
-        )}
+           </div>
+           
+           <div className="overflow-x-auto">
+             <table className="w-full">
+               <thead className="bg-gray-50">
+                 <tr>
+                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">ID</th>
+                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">닉네임</th>
+                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">성별</th>
+                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">결과</th>
+                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">점수</th>
+                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">완료 시간</th>
+                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">상세</th>
+                 </tr>
+               </thead>
+               <tbody className="divide-y divide-gray-200">
+                 {results.map((result) => (
+                   <tr key={result.id} className="hover:bg-gray-50">
+                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                       {result.id}
+                     </td>
+                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                       {result.nickname}
+                     </td>
+                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                       {result.gender === 'male' ? '👨 남성' : '👩 여성'}
+                     </td>
+                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                       {getResultTypeKorean(result.result_type, result.gender)}
+                     </td>
+                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                       테토 {result.teto_score}% / 에겐 {result.egen_score}%
+                     </td>
+                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                       {formatDate(result.created_at)}
+                     </td>
+                     <td className="px-6 py-4 whitespace-nowrap text-sm">
+                       <button
+                         onClick={() => setSelectedResult(result)}
+                         className="bg-blue-500 text-white px-3 py-1 rounded text-xs hover:bg-blue-600 transition-colors"
+                       >
+                         상세보기
+                       </button>
+                     </td>
+                   </tr>
+                 ))}
+               </tbody>
+             </table>
+             
+             {results.length === 0 && (
+               <div className="text-center py-12 text-gray-500">
+                 아직 테스트 결과가 없습니다.
+               </div>
+             )}
+           </div>
+         </div>
+       )}
 
-        {/* 결과 상세 모달 */}
-        <ResultDetailModal
-          result={selectedResult}
-          onClose={() => setSelectedResult(null)}
-        />
-      </div>
-    </div>
-  );
+       {/* 결과 상세 모달 */}
+       <ResultDetailModal
+         result={selectedResult}
+         onClose={() => setSelectedResult(null)}
+       />
+     </div>
+   </div>
+ );
 };
 
 export default Admin;
