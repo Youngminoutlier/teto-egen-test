@@ -60,74 +60,90 @@ export const generateResultImage = (resultData) => {
 
 // 상단 섹션
 const drawTopSection = (ctx, canvas) => {
-  // 작은 아이콘들
+  // 작은 아이콘들 - 테토/에겐 이모지로 변경
   ctx.font = '60px Arial'
-  ctx.fillText('🧪', canvas.width/2 - 80, 180)
-  ctx.fillText('⚡', canvas.width/2, 180)
-  ctx.fillText('💕', canvas.width/2 + 80, 180)
+  ctx.fillText('🔥', canvas.width/2 - 80, 180)
+  ctx.fillText('🧪', canvas.width/2, 180)
+  ctx.fillText('🌸', canvas.width/2 + 80, 180)
   
   // 메인 타이틀
   ctx.font = 'bold 72px Pretendard, Arial'
   ctx.fillText('테토/에겐 테스트', canvas.width/2, 280)
 }
 
-// 메인 결과 섹션
+// 메인 결과 섹션 - 박스 크기 증가
 const drawMainResult = (ctx, canvas, nickname, resultType, gender) => {
-  // 배경 카드
+  // 배경 카드 - 더 크게, 여백 추가
   ctx.shadowBlur = 30
   ctx.shadowColor = 'rgba(0, 0, 0, 0.2)'
   ctx.fillStyle = 'rgba(255, 255, 255, 0.15)'
-  ctx.roundRect(80, 380, canvas.width - 160, 300, 30)
+  ctx.roundRect(60, 360, canvas.width - 120, 360, 30) // 높이 300 → 360으로 증가
   ctx.fill()
   
   ctx.shadowBlur = 0
   
-  // "나는" 텍스트
+  // "나는" 텍스트 - 위치 조정
   ctx.font = 'bold 80px Pretendard, Arial'
   ctx.fillStyle = 'rgba(255, 255, 255, 0.9)'
   ctx.fillText('나는', canvas.width/2, 480)
   
-  // 결과 타입 (메인)
+  // 결과 타입 (메인) - 위치 조정
   ctx.font = 'bold 110px Pretendard, Arial'
   ctx.fillStyle = 'white'
   const resultTitle = getResultTitle(resultType, gender)
-  ctx.fillText(resultTitle, canvas.width/2, 590)
+  ctx.fillText(resultTitle, canvas.width/2, 600)
   
-  // 닉네임
+  // 닉네임 - 위치 조정
   ctx.font = 'bold 70px Pretendard, Arial'
   ctx.fillStyle = 'rgba(255, 255, 255, 0.95)'
-  ctx.fillText(nickname, canvas.width/2, 660)
+  ctx.fillText(nickname, canvas.width/2, 680)
 }
 
-// 점수 섹션
+// 점수 섹션 - 텍스트 색상 개선
 const drawScoreSection = (ctx, canvas, tetoScore, egenScore) => {
   const leftX = canvas.width/2 - 200
   const rightX = canvas.width/2 + 200
-  const y = 900
+  const y = 920 // 위치 조정
   
-  // 테토 점수 카드
+  // 테토 점수 카드 - 크기 증가
   ctx.fillStyle = 'rgba(255, 255, 255, 0.2)'
-  ctx.roundRect(leftX - 120, y - 80, 240, 120, 20)
+  ctx.roundRect(leftX - 140, y - 100, 280, 140, 20) // 박스 크기 증가
   ctx.fill()
   
+  // 테토 이모지
+  ctx.font = '40px Arial'
+  ctx.fillStyle = 'white'
+  ctx.fillText('🔥', leftX, y - 50)
+  
+  // 테토 텍스트 - 흰색으로 변경
   ctx.font = 'bold 45px Pretendard, Arial'
-  ctx.fillStyle = '#8B93FF'
-  ctx.fillText('테토', leftX, y - 25)
+  ctx.fillStyle = 'white'
+  ctx.fillText('테토', leftX, y - 5)
+  
+  // 테토 퍼센트
   ctx.font = 'bold 60px Pretendard, Arial'
   ctx.fillStyle = 'white'
-  ctx.fillText(`${tetoScore}%`, leftX, y + 35)
+  ctx.fillText(`${tetoScore}%`, leftX, y + 50)
   
-  // 에겐 점수 카드
+  // 에겐 점수 카드 - 크기 증가
   ctx.fillStyle = 'rgba(255, 255, 255, 0.2)'
-  ctx.roundRect(rightX - 120, y - 80, 240, 120, 20)
+  ctx.roundRect(rightX - 140, y - 100, 280, 140, 20) // 박스 크기 증가
   ctx.fill()
   
+  // 에겐 이모지
+  ctx.font = '40px Arial'
+  ctx.fillStyle = 'white'
+  ctx.fillText('🌸', rightX, y - 50)
+  
+  // 에겐 텍스트 - 흰색으로 변경
   ctx.font = 'bold 45px Pretendard, Arial'
-  ctx.fillStyle = '#FF8FB3'
-  ctx.fillText('에겐', rightX, y - 25)
+  ctx.fillStyle = 'white'
+  ctx.fillText('에겐', rightX, y - 5)
+  
+  // 에겐 퍼센트
   ctx.font = 'bold 60px Pretendard, Arial'
   ctx.fillStyle = 'white'
-  ctx.fillText(`${egenScore}%`, rightX, y + 35)
+  ctx.fillText(`${egenScore}%`, rightX, y + 50)
   
   // VS 텍스트
   ctx.font = 'bold 50px Pretendard, Arial'
@@ -135,7 +151,7 @@ const drawScoreSection = (ctx, canvas, tetoScore, egenScore) => {
   ctx.fillText('VS', canvas.width/2, y + 10)
 }
 
-// 모던한 원형 차트
+// 모던한 원형 차트 - 중앙 이모지 변경
 const drawModernChart = (ctx, centerX, centerY, radius, tetoScore, egenScore) => {
   const total = tetoScore + egenScore
   if (total === 0) return
@@ -178,39 +194,45 @@ const drawModernChart = (ctx, centerX, centerY, radius, tetoScore, egenScore) =>
   ctx.fillStyle = 'white'
   ctx.fill()
   
-  // 중앙 아이콘
+  // 중앙 아이콘 - 테토가 높으면 🔥, 에겐이 높으면 🌸
   ctx.font = 'bold 60px Arial'
   ctx.fillStyle = '#666'
-  ctx.fillText('🧪', centerX, centerY + 15)
+  if (tetoScore > egenScore) {
+    ctx.fillText('🔥', centerX, centerY + 15)
+  } else if (egenScore > tetoScore) {
+    ctx.fillText('🌸', centerX, centerY + 15)
+  } else {
+    ctx.fillText('🧪', centerX, centerY + 15)
+  }
 }
 
-// 하단 섹션
+// 하단 섹션 - 박스 크기 증가
 const drawBottomSection = (ctx, canvas) => {
-  // CTA 배경
+  // CTA 배경 - 높이 증가
   ctx.fillStyle = 'rgba(255, 255, 255, 0.15)'
-  ctx.roundRect(100, 1450, canvas.width - 200, 200, 25)
+  ctx.roundRect(80, 1420, canvas.width - 160, 240, 25) // 높이 200 → 240으로 증가
   ctx.fill()
   
-  // CTA 텍스트
+  // CTA 텍스트 - 위치 조정
   ctx.font = 'bold 65px Pretendard, Arial'
   ctx.fillStyle = 'white'
-  ctx.fillText('당신도 테스트해보세요!', canvas.width/2, 1520)
+  ctx.fillText('당신도 테스트해보세요!', canvas.width/2, 1510)
   
-  // 이모지 장식
+  // 이모지 장식 - 위치 조정
   ctx.font = '50px Arial'
-  ctx.fillText('✨ 🎯 ✨', canvas.width/2, 1580)
+  ctx.fillText('✨ 🎯 ✨', canvas.width/2, 1570)
   
-  // URL
+  // URL - 위치 조정
   ctx.font = 'bold 50px Pretendard, Arial'
   ctx.fillStyle = 'rgba(255, 255, 255, 0.9)'
   ctx.fillText('teto-egen-test.com', canvas.width/2, 1630)
   
-  // 하단 장식
+  // 하단 장식 - 위치 조정
   ctx.font = '40px Arial'
   ctx.fillStyle = 'rgba(255, 255, 255, 0.6)'
   ctx.fillText('• • •', canvas.width/2, 1750)
   
-  // 제작자 크레딧
+  // 제작자 크레딧 - 위치 조정
   ctx.font = '35px Pretendard, Arial'
   ctx.fillStyle = 'rgba(255, 255, 255, 0.7)'
   ctx.fillText('made by @0_min._.00', canvas.width/2, 1820)
