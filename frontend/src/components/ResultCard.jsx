@@ -39,17 +39,19 @@ const ResultCard = ({ testData }) => {
     <div className={`rounded-2xl p-6 text-white ${getGradientClass()}`}>
       {/* 메인 결과 */}
       <div className="text-center mb-6">
-        {/* 첫 번째 제목 - 줄바꿈 방지를 위한 텍스트 크기 조절 */}
-        <h2 className="font-bold mb-2 result-card-title leading-tight" 
-            style={{
-              fontSize: `${Math.min(1.5, 20 / (addParticle(nickname) + ' ' + resultText.title + getEndingParticle(resultText.title) + '!').length * 0.8)}rem`
-            }}>
+        {/* 첫 번째 제목 - 원래 크기에서 1pt만 줄임 */}
+        <h2 className="text-xl font-bold mb-2 result-card-title leading-tight">
           {addParticle(nickname)} {resultText.title}{getEndingParticle(resultText.title)}!
         </h2>
         
-        {/* 두 번째 설명 - 문장별 줄바꿈 */}
+        {/* 두 번째 설명 - \n을 <br />로 변환 */}
         <p className="text-base opacity-95 leading-relaxed result-card-text">
-          {formatDescription(resultText.description)}
+          {resultText.description.split('\n').map((line, index) => (
+            <span key={index}>
+              {line}
+              {index < resultText.description.split('\n').length - 1 && <br />}
+            </span>
+          ))}
         </p>
       </div>
 
