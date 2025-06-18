@@ -21,9 +21,9 @@ export const QUESTIONS = [
     id: 3,
     text: "썸타는 사람이 이틀째 연락이 없어. 나의 대응은?",
     options: [
-      { text: "먼저 연락해서 \"뭐해? 바빠?\" 직진 어택", value: "teto", score: 3 },
-      { text: "하루 더 기다려보고 자연스럽게 연락", value: "neutral", score: 0 },
-      { text: "혹시 귀찮게 했나.. 마음 접기", value: "egen", score: 3 }
+      { text: "먼저 연락해서 \"뭐해? 바빠?\" 직진 어택하는 편", value: "teto", score: 3 },
+      { text: "하루 더 기다려보고 자연스럽게 연락해야지", value: "neutral", score: 0 },
+      { text: "혹시 귀찮게 했나.. 마음 접는 편", value: "egen", score: 3 }
     ]
   },
   {
