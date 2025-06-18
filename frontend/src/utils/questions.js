@@ -55,11 +55,11 @@ export const QUESTIONS = [
   },
   {
     id: 7,
-    text: "친구가 내 SNS 사진에 \"살 왜케 빠졌어?\"라고 댓글 달았어. 사실 안 뺐는데? 보정한 건뎅?",
+    text: "밤에 배고픈데 야식으로 뭘 먹을지 개고민됨..",
     options: [
-      { text: "\"보정빨이야 ㅋㅋ\" 솔직 답변", value: "teto", score: 3 },
-      { text: "\"그런가? ㅎㅎ\" 애매하게 넘어가기", value: "neutral", score: 0 },
-      { text: "\"헤헤 ㅎㅎ 고마워\" 고마워하며 넘어가기", value: "egen", score: 3 }
+      { text: "\"이미 늦었으니까 먹고 내일부터 운동 더 하자!\"", value: "teto", score: 3 },
+      { text: "\"인생 짧아.. 오늘은 치맥이다 ㅋㅋ\"", value: "neutral", score: 0 },
+      { text: "\"샐러드.. 아니 치킨 ..? 음 샐러드..? 계속 고민함\"", value: "egen", score: 3 }
     ]
   },
   {
@@ -73,20 +73,20 @@ export const QUESTIONS = [
   },
   {
     id: 9,
-    text: "치킨 시켜먹는데 다리만 남았어. 다리를 집었는데 친구랑 손이 겹쳤어. 어떻게 할 거야?",
+    text: "너 혼자 사는데 어제부터 새벽에 위층에서 너무 쿵쿵거려",
     options: [
-      { text: "\"내가 먼저 집었음 ㅋ\" 하고 가져가기", value: "teto", score: 3 },
-      { text: "가위바위보나 제비뽑기 제안", value: "neutral", score: 0 },
-      { text: "\"너가 먹어\" 하고 양보하기", value: "egen", score: 3 }
+      { text: "빗자루로 천장 두드리며 맞대응 들어가야지;", value: "teto", score: 3 },
+      { text: "관리사무소에 민원 넣음", value: "neutral", score: 0 },
+      { text: "\"곧 그만하시겠지 ..\" 하며 에어팟 낌", value: "egen", score: 3 }
     ]
   },
   {
     id: 10,
-    text: "단톡방에서 민감한 주제로 논쟁이 벌어지고 있어. 나의 선택은?",
+    text: "단톡방에서 정치 얘기로 논쟁이 벌어지고 있어. 나의 선택은?",
     options: [
-      { text: "내 의견 확실히 표현하고 토론 참여", value: "teto", score: 2 },
-      { text: "적당히 중립적인 의견 하나 던지기", value: "neutral", score: 0 },
-      { text: "읽씹이나 안읽씹하고 나중에 다른 주제로 화제 전환", value: "egen", score: 2 }
+      { text: "내 의견 확실히 표현하고 토론 참여함.", value: "teto", score: 2 },
+      { text: "읽씹이나 안읽씹하고 다른 주제 전환될 때까지 기다림", value: "neutral", score: 0 },
+      { text: "모두의 의견을 존중하며 중재하고 다른 주제로 화제 전환", value: "egen", score: 2 }
     ]
   },
   {
@@ -111,7 +111,7 @@ export const QUESTIONS = [
     id: 13,
     text: "길에서 넘어졌는데 사람들이 쳐다봐. 어떻게 반응할 거야?",
     options: [
-      { text: "의도한 것처럼 자연스럽게 춤추면서 일어나기", value: "teto", score: 2 },
+      { text: "의도했던 것처럼 자연스럽게 춤추면서 일어남 ㅋ", value: "teto", score: 2 },
       { text: "빨리 일어나서 무릎 털고 자연스럽게 가던 길 가기", value: "neutral", score: 0 },
       { text: "얼굴 빨개져서 앞만 보고 후다닥 도망가기", value: "egen", score: 2 }
     ]
@@ -120,7 +120,7 @@ export const QUESTIONS = [
     id: 14,
     text: "시험 봤는데 생각보다 잘 본 것 같아. 친구들한테 뭐라고 할 거야?",
     options: [
-      { text: "\"이번에 셤 개잘본듯 ㅋㅋ\" 솔직하게", value: "teto", score: 2 },
+      { text: "\"이번에 셤 개잘본듯 ㅋㅋ\" 솔직하게 말함", value: "teto", score: 2 },
       { text: "\"그럭저럭...?\" 애매하게 답하기", value: "neutral", score: 0 },
       { text: "\"망했어ㅠㅠ\" 겸손하게(?) 답하기", value: "egen", score: 2 }
     ]
@@ -138,18 +138,18 @@ export const QUESTIONS = [
     id: 16,
     text: "친구랑 영화 보는데 내가 보고 싶었던 거랑 친구가 보고 싶은 게 달라. 어떻게 할 거야?",
     options: [
-      { text: "\"근데 이 영화는 안 보면 후회함 ㄹㅇ\" 내가 보고 싶은 영화 보자고 주장하기", value: "teto", score: 2 },
+      { text: "\"근데 이 영화는 안 보면 후회해 ㄹㅇ\" 내가 보고 싶은 영화 보자고 주장하기", value: "teto", score: 2 },
       { text: "\"리뷰 좀 봐볼까?\" 하고 친구랑 같이 골라보기", value: "neutral", score: 0 },
       { text: "그냥 친구가 보고 싶어하는 걸로 양보하기", value: "egen", score: 2 }
     ]
   },
   {
     id: 17,
-    text: "친구랑 약속했는데 30분째 안 와. 연락도 안 받고 있어. 어떻게 할 거야?",
+    text: "주말 오후 3시, 집에서 뒹굴거리고 있을 때",
     options: [
-      { text: "계속 전화하고 \"어디야? 언제 옴?\" 메시지 보내기", value: "teto", score: 2 },
-      { text: "그냥 기다리면서 핸드폰 보기", value: "neutral", score: 0 },
-      { text: "\"괜찮어 천천히 와~\" 메시지 보내고 기다리기", value: "egen", score: 2 }
+      { text: "\"이러면 안 되는데 ..\" 하면서 일어나서 뭔가 하기", value: "teto", score: 2 },
+      { text: "\"오늘 완전 힐링데이야\" 하면서 계속 누워 있기", value: "neutral", score: 0 },
+      { text: "30분 더 있다가 천천히 일어나기", value: "egen", score: 2 }
     ]
   },
   {
