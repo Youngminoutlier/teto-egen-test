@@ -30,27 +30,41 @@ const Test = ({ testData, setTestData }) => {
         endTime: new Date().toISOString()
       }
 
-      setTestData(completedTestData)
-
-      // 백엔드에 결과 저장 (실패해도 계속 진행)
+      // 즉시 localStorage에 저장 (카카오톡 대응)
       try {
-        console.log('결과 저장 시도:', completedTestData);
-        const response = await submitTestResult(completedTestData);
-        console.log('결과 저장 성공:', response);
+        localStorage.setItem('tetoEgenTestData', JSON.stringify(completedTestData))
+        console.log('결과 데이터 즉시 저장됨')
       } catch (error) {
-        console.error('서버 저장 실패 (로컬 저장은 정상):', error);
+        console.error('localStorage 저장 실패:', error)
       }
 
-      // 결과 페이지로 이동 (약간의 지연 후)
+      // 상태 업데이트
+      setTestData(completedTestData)
+
+      // 백엔드 저장 (비동기, 실패해도 상관없음)
+      submitTestResult(completedTestData).catch(error => {
+        console.warn('서버 저장 실패:', error)
+      })
+
+      // 결과 페이지로 이동 - 조금 더 긴 지연
       setTimeout(() => {
+        console.log('결과 페이지로 이동 시도')
         navigate('/result')
-      }, 1000)
+      }, 1500) // 1.5초로 증가
+
     } else {
       // 다음 질문으로
       const updatedTestData = {
         ...testData,
         answers: newAnswers,
         currentQuestion: nextQuestion
+      }
+      
+      // 중간 상태도 저장
+      try {
+        localStorage.setItem('tetoEgenTestData', JSON.stringify(updatedTestData))
+      } catch (error) {
+        console.error('중간 저장 실패:', error)
       }
       
       setTestData(updatedTestData)
@@ -77,7 +91,7 @@ const Test = ({ testData, setTestData }) => {
               <h2 className="text-xl font-bold text-gray-800 mb-4">
                 테스트 완료!
               </h2>
-              <p className="text-gray-600 mb-6">
+              <p className="text-gray-600 mb-6 font-medium">
                 {testData.nickname}님의 결과를 분석하고 있어요...
               </p>
               <div className="loading-pulse">
