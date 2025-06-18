@@ -3,7 +3,7 @@ export const getResultText = (resultType, gender, nickname) => {
   const texts = {
     legend_teto: {
       title: gender === 'male' ? '레전드테토남' : '레전드테토녀',
-      description: `ㄷㄷ 완전 극강 테토네 미쳤다 😎 혹시 평소에 잘 씻어?`,
+      description: `ㄷㄷ 완전 극강 테토네 미쳤다 😎\n혹시 평소에 잘 씻어?`,
       traits: [
         '🔥 리더십 타고남 - 어디서든 자연스럽게 팀 이끄는 타입이야 ㅋㅋ 조별과제 팀장은 기본이고 💪',
         '⚡ 목표 달성 능력 레전드급 - 한번 정하면 끝까지 해내는 그 악착같음이 부러워 ㅎㅎ',
@@ -22,7 +22,7 @@ export const getResultText = (resultType, gender, nickname) => {
     },
     teto: {
       title: gender === 'male' ? '테토남' : '테토녀',
-      description: `적당히 밸런스 잡힌 테토네 👍 그래도 잘 씻고 다니지?`,
+      description: `적당히 밸런스 잡힌 테토네 👍\n그래도 잘 씻고 다니지?`,
       traits: [
         '👑 리더십 있지만 독재자는 아님 ㅋㅋ - 사람들 의견 들어주면서도 방향은 네가 정하는 스타일',
         '🌟 도전 정신 있어서 재밌을 듯 - 새로운 걸 시도하는 거 좋아하고 흥미로운 길 선택하는 편',
@@ -40,7 +40,7 @@ export const getResultText = (resultType, gender, nickname) => {
     },
     balance: {
       title: gender === 'male' ? '밸런스남' : '밸런스녀',
-      description: `완전 밸런스 캐릭터 👌 상황 따라 유연하게 대처하는 만능 타입이네!`,
+      description: `완전 밸런스 캐릭터 👌\n상황 따라 유연하게 대처하는 만능 타입이네!`,
       traits: [
         '🎯 상황판단력 굿 - 분위기 파악하고 언제 나서고 언제 물러설지 아는 센스쟁이',
         '😌 극단적이지 않아서 안정적 - 갑자기 돌변 안 해서 사람들이 편하게 느껴 💕',
@@ -58,7 +58,7 @@ export const getResultText = (resultType, gender, nickname) => {
     },
     egen: {
       title: gender === 'male' ? '에겐남' : '에겐녀',
-      description: `따뜻한 에겐 성향 💕 친구들이 고민 있을 때 찾아 올 만한 힐링 타입이네!`,
+      description: `따뜻한 에겐 성향 💕\n친구들이 고민 있을 때 찾아 올 만한 힐링 타입이네!`,
       traits: [
         '💖 공감능력 상담사급 - 다른 사람 감정 잘 읽고 자연스럽게 위로해주는 따뜻한 성격',
         '🤝 협력 러버 팀워크 굿 - 혼자 앞서가기보다 함께 나아가는 걸 선호하는 상생주의자',
@@ -76,7 +76,7 @@ export const getResultText = (resultType, gender, nickname) => {
     },
     legend_egen: {
       title: gender === 'male' ? '레전드에겐남' : '레전드에겐녀',
-      description: `와 에겐 극강이네 지린다 ㄷㄷ 진짜 천사 같은 성격!!😇 혹시 어제도 울었어?`,
+      description: `와 에겐 극강이네 지린다 ㄷㄷ 진짜 천사 같은 성격!!😇\n혹시 어제도 울었어? ㅋㅋ`,
       traits: [
         '💝 공감능력 레전드급 - 거의 마음 읽는 수준이야 미묘한 표정변화도 다 캐치하는 섬세함의 끝판왕',
         '🕊️ 갈등해결사 인증 - 사람들 사이 문제 생기면 자연스럽게 중재자 되는 평화의 사도',
