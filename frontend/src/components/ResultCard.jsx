@@ -23,15 +23,33 @@ const ResultCard = ({ testData }) => {
     return title.endsWith('녀') ? '야' : '이야'
   }
 
+  // description을 문장별로 나누는 함수
+  const formatDescription = (description) => {
+    // 문장 끝 기호들로 분리 (마침표, 느낌표, 물음표 등)
+    const sentences = description.split(/(?<=[.!?])\s+/)
+    return sentences.map((sentence, index) => (
+      <span key={index}>
+        {sentence}
+        {index < sentences.length - 1 && <br />}
+      </span>
+    ))
+  }
+
   return (
     <div className={`rounded-2xl p-6 text-white ${getGradientClass()}`}>
       {/* 메인 결과 */}
       <div className="text-center mb-6">
-        <h2 className="text-2xl font-bold mb-2 result-card-title">
+        {/* 첫 번째 제목 - 줄바꿈 방지를 위한 텍스트 크기 조절 */}
+        <h2 className="font-bold mb-2 result-card-title leading-tight" 
+            style={{
+              fontSize: `${Math.min(1.5, 20 / (addParticle(nickname) + ' ' + resultText.title + getEndingParticle(resultText.title) + '!').length * 0.8)}rem`
+            }}>
           {addParticle(nickname)} {resultText.title}{getEndingParticle(resultText.title)}!
         </h2>
-        <p className="text-lg opacity-95 leading-relaxed result-card-text">
-          {resultText.description}
+        
+        {/* 두 번째 설명 - 문장별 줄바꿈 */}
+        <p className="text-base opacity-95 leading-relaxed result-card-text">
+          {formatDescription(resultText.description)}
         </p>
       </div>
 
@@ -63,7 +81,7 @@ const ResultCard = ({ testData }) => {
       <div className="mb-6">
         <h3 className="text-lg font-bold mb-3 result-section-title">💕 연애 스타일</h3>
         <p className="text-sm opacity-95 leading-relaxed result-card-text">
-          {resultText.loveStyle}
+          {formatDescription(resultText.loveStyle)}
         </p>
       </div>
 
@@ -71,14 +89,14 @@ const ResultCard = ({ testData }) => {
       <div className="mb-6">
         <h3 className="text-lg font-bold mb-3 result-section-title">💼 직업 적성</h3>
         <p className="text-sm opacity-95 leading-relaxed result-card-text">
-          {resultText.jobFit}
+          {formatDescription(resultText.jobFit)}
         </p>
       </div>
 
       {/* 마무리 멘트 */}
       <div className="bg-white bg-opacity-20 rounded-lg p-4 backdrop-blur-sm">
         <p className="text-sm leading-relaxed result-card-text">
-          {resultText.finalComment}
+          {formatDescription(resultText.finalComment)}
         </p>
       </div>
     </div>
