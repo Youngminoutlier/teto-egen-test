@@ -64,8 +64,8 @@ const drawTopSection = (ctx, canvas) => {
   // 심플한 아이콘
   ctx.font = '50px Pretendard, Arial'
   ctx.fillStyle = 'rgba(255, 255, 255, 0.9)'
-  ctx.fillText('🔥', canvas.width/2 - 50, 160)
-  ctx.fillText('🌸', canvas.width/2 + 50, 160)
+  ctx.fillText('⚡', canvas.width/2 - 50, 160)
+  ctx.fillText('💝', canvas.width/2 + 50, 160)
   
   // 메인 타이틀 - 더 심플한 폰트
   ctx.font = 'bold 64px Pretendard, Arial'
@@ -126,7 +126,7 @@ const drawScoreSection = (ctx, canvas, tetoScore, egenScore) => {
   const spacing = 320  // 280에서 320으로 증가
   
   // 테토 점수
-  drawScoreCard(ctx, canvas.width/2 - spacing/2, centerY, '🔥', '테토', tetoScore, '#667eea')
+  drawScoreCard(ctx, canvas.width/2 - spacing/2, centerY, '⚡', '테토', tetoScore, '#667eea')
   
   // VS 텍스트
   ctx.font = 'bold 40px Pretendard, Arial'
@@ -134,7 +134,7 @@ const drawScoreSection = (ctx, canvas, tetoScore, egenScore) => {
   ctx.fillText('VS', canvas.width/2, centerY + 10)
   
   // 에겐 점수
-  drawScoreCard(ctx, canvas.width/2 + spacing/2, centerY, '🌸', '에겐', egenScore, '#f093fb')
+  drawScoreCard(ctx, canvas.width/2 + spacing/2, centerY, '💝', '에겐', egenScore, '#f093fb')
 }
 
 // 개별 점수 카드
@@ -197,9 +197,9 @@ const drawMinimalChart = (ctx, centerX, centerY, radius, tetoScore, egenScore) =
   ctx.font = '48px Arial'
   ctx.fillStyle = '#4A5568'
   if (tetoScore > egenScore) {
-    ctx.fillText('🔥', centerX, centerY + 12)
+    ctx.fillText('⚡', centerX, centerY + 12)
   } else if (egenScore > tetoScore) {
-    ctx.fillText('🌸', centerX, centerY + 12)
+    ctx.fillText('💝', centerX, centerY + 12)
   } else {
     ctx.fillText('⚖️', centerX, centerY + 12)
   }
