@@ -174,7 +174,7 @@ export const QUESTIONS = [
     id: 20,
     text: "친구한테만 말했던 비밀을 다른 사람들이 알고 있어. 그 친구가 말한 게 확실해. 어떻게 할 거야?",
     options: [
-      { text: "바로 그 친구한테 \"왜 말했냐?\" 따지기", value: "teto", score: 2 },
+      { text: "바로 그 친구한테 \"왜 말했어?\" 따지기", value: "teto", score: 2 },
       { text: "일단 상황 파악하고 나중에 얘기하기", value: "neutral", score: 0 },
       { text: "속상하지만.. 그냥 넘어가기", value: "egen", score: 2 }
     ]
