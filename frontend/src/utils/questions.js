@@ -165,9 +165,9 @@ export const QUESTIONS = [
     id: 19,
     text: "나의 평소 패션 스타일은 주로 어떤 느낌에 가까워?",
     options: [
-      { text: "개성 강하고 힙한, 시선 강탈하는 스타일!", value: "teto", score: 2 },
+      { text: "깔끔하고 편하면 장땡! 시간 낭비 싫어", value: "teto", score: 2 },
       { text: "유행을 따르기보다는 무난하고 깔끔한 기본 스타일", value: "neutral", score: 0 },
-      { text: "부드럽고 편안한, 차분하고 단정한 스타일", value: "egen", score: 2 }
+      { text: "오늘 기분이나 만나는 사람에 맞춰 신경 써서 입음", value: "egen", score: 2 }
     ]
   },
   {
