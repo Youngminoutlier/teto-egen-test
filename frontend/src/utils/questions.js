@@ -12,16 +12,16 @@ export const QUESTIONS = [
     id: 2,
     text: "친구가 \"오늘 머리 어때?\"라고 물어봤는데 솔직히 별로야. 뭐라고 대답할 거야?",
     options: [
-      { text: "\"왜 이렇게 잘랐어 ㅋㅋ 솔직히 별로임\"", value: "teto", score: 2 },
-      { text: "\"음... 나쁘지 않은데?\"", value: "neutral", score: 0 },
-      { text: "\"미쳤다 너무 예뻐! 너한테 잘 어울려\"", value: "egen", score: 2 }
+      { text: "\"왜 이렇게 잘랐어 ㅋㅋ 솔직히 별로임\" 직설적으로 말함", value: "teto", score: 2 },
+      { text: "\"음... 나쁘지 않은데? 애매하게 말함\"", value: "neutral", score: 0 },
+      { text: "\"미쳤다 너무 예뻐! 너한테 잘 어울려\" 일단 칭찬부터 함", value: "egen", score: 2 }
     ]
   },
   {
     id: 3,
     text: "썸타는 사람이 이틀째 연락이 없어. 나의 대응은?",
     options: [
-      { text: "먼저 연락해서 \"뭐해? 바빠?\" 직진 어택하는 편", value: "teto", score: 3 },
+      { text: "먼저 연락해서 \"뭐해? 바빠?\" 선톡 날리는 편", value: "teto", score: 3 },
       { text: "하루 더 기다려보고 자연스럽게 연락해야지", value: "neutral", score: 0 },
       { text: "혹시 귀찮게 했나.. 마음 접는 편", value: "egen", score: 3 }
     ]
@@ -48,8 +48,8 @@ export const QUESTIONS = [
     id: 6,
     text: "음식점에서 주문한 거랑 다른 음식이 나왔어. 근데 그것도 맛있어 보여. 어떻게 할 거야?",
     options: [
-      { text: "\"제가 주문한 건 이게 아닌데요?\" 바로 정정 요청", value: "teto", score: 2 },
-      { text: "\"잘못 나왔네; 바꿔달라고 할까?\" 같이 먹는 친구한테 물어보기", value: "neutral", score: 0 },
+      { text: "\"제가 주문한 건 이게 아닌데요?\" 바로 직원 호출", value: "teto", score: 2 },
+      { text: "\"잘못 나왔네; 바꿔달라고 할까?\" 같이 온 친구한테 물어봄", value: "neutral", score: 0 },
       { text: "실수한 것 같지만 조용히 그냥 먹기", value: "egen", score: 2 }
     ]
   },
@@ -57,9 +57,9 @@ export const QUESTIONS = [
     id: 7,
     text: "밤에 배고픈데 야식으로 뭘 먹을지 개고민됨..",
     options: [
-      { text: "\"이미 늦었으니까 먹고 내일부터 운동 더 하자!\"", value: "teto", score: 3 },
-      { text: "\"인생 짧아.. 오늘은 치맥이다 ㅋㅋ\"", value: "neutral", score: 0 },
-      { text: "\"샐러드.. 아니 치킨 ..? 음 샐러드..? 계속 고민함\"", value: "egen", score: 3 }
+      { text: "\"일단 시켜! 내일부터 운동 더 하면 되지 ㅋ\"", value: "teto", score: 3 },
+      { text: "일단 냉장고 열어보고 있는 거 아무거나 먹음", value: "neutral", score: 0 },
+      { text: "\"샐러드.. 아니 치킨 ..? 음 샐러드..?\" 계속 고민함", value: "egen", score: 3 }
     ]
   },
   {
@@ -138,45 +138,45 @@ export const QUESTIONS = [
     id: 16,
     text: "친구랑 영화 보는데 내가 보고 싶었던 거랑 친구가 보고 싶은 게 달라. 어떻게 할 거야?",
     options: [
-      { text: "\"근데 이 영화는 안 보면 후회해 ㄹㅇ\" 내가 보고 싶은 영화 보자고 주장하기", value: "teto", score: 2 },
-      { text: "\"리뷰 좀 봐볼까?\" 하고 친구랑 같이 골라보기", value: "neutral", score: 0 },
-      { text: "그냥 친구가 보고 싶어하는 걸로 양보하기", value: "egen", score: 2 }
+      { text: "\"근데 이 영화는 안 보면 후회해 ㄹㅇ\" 일단 내가 보고 싶은 영화 보자고 주장함", value: "teto", score: 2 },
+      { text: "\"리뷰 좀 봐볼까?\" 하고 친구랑 같이 고민해봄", value: "neutral", score: 0 },
+      { text: "그냥 친구가 보고 싶어하는 걸로 양보함", value: "egen", score: 2 }
     ]
   },
   {
     id: 17,
-    text: "주말 오후 3시, 집에서 뒹굴거리고 있을 때",
+    text: "연애 중, 애인과 갈등이 생겼을 때 나의 행동은?",
     options: [
-      { text: "\"이러면 안 되는데 ..\" 하면서 일어나서 뭔가 하기", value: "teto", score: 2 },
-      { text: "\"오늘 완전 힐링데이야\" 하면서 계속 누워 있기", value: "neutral", score: 0 },
-      { text: "30분 더 있다가 천천히 일어나기", value: "egen", score: 2 }
+      { text: "바로 문제점 얘기하고 해결 방안 찾음. 싸움은 싸움이고 해결은 해결!", value: "teto", score: 3 },
+      { text: "일단 감정적으로 격해지지 않도록 노력하며 상황을 지켜봄", value: "neutral", score: 0 },
+      { text: "일단 상대방 감정부터 살핌. 분위기 안 좋으면 내가 맞춰주는 편", value: "egen", score: 3 }
     ]
   },
   {
     id: 18,
     text: "모임에서 분위기가 어색해졌어. 갑자기 조용해진 상황. 어떻게 할 거야?",
     options: [
-      { text: "\"갑자기 왜케 조용해?\" 하고 분위기 깨기", value: "teto", score: 3 },
+      { text: "\"갑자기 왜케 조용해?\" 하고 분위기 깨기", value: "teto", score: 2 },
       { text: "조용히 핸드폰 보면서 상황 지켜보기", value: "neutral", score: 0 },
-      { text: "\"음악 틀까?\" 하고 자연스러운 분위기 전환 시도", value: "egen", score: 3 }
+      { text: "\"음악 틀까?\" 하고 자연스러운 분위기 전환 시도", value: "egen", score: 2 }
     ]
   },
   {
     id: 19,
-    text: "인스타 스토리에 뭘 올릴지 고민이야. 어떤 걸 선택할 거야?",
+    text: "나의 평소 패션 스타일은 주로 어떤 느낌에 가까워?",
     options: [
-      { text: "내 일상 자랑하는 멋있는 사진", value: "teto", score: 2 },
-      { text: "무난한 음식 사진이나 풍경", value: "neutral", score: 0 },
-      { text: "친구들이나 다른 사람들이 나온 재밌는 사진", value: "egen", score: 2 }
+      { text: "개성 강하고 힙한, 시선 강탈하는 스타일!", value: "teto", score: 2 },
+      { text: "유행을 따르기보다는 무난하고 깔끔한 기본 스타일", value: "neutral", score: 0 },
+      { text: "부드럽고 편안한, 차분하고 단정한 스타일", value: "egen", score: 2 }
     ]
   },
   {
     id: 20,
     text: "친구한테만 말했던 비밀을 다른 사람들이 알고 있어. 그 친구가 말한 게 확실해. 어떻게 할 거야?",
     options: [
-      { text: "바로 그 친구한테 \"왜 말했어?\" 따지기", value: "teto", score: 2 },
-      { text: "일단 상황 파악하고 나중에 얘기하기", value: "neutral", score: 0 },
-      { text: "속상하지만.. 그냥 넘어가기", value: "egen", score: 2 }
+      { text: "바로 그 친구한테 \"왜 말했어?\" 따지는 편", value: "teto", score: 2 },
+      { text: "일단 상황 파악하고 나중에 얘기하는 편", value: "neutral", score: 0 },
+      { text: "속상하지만.. 그냥 넘어가는 편", value: "egen", score: 2 }
     ]
   }
 ]
