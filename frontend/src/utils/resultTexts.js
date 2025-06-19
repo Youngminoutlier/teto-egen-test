@@ -82,7 +82,7 @@ export const getResultText = (resultType, gender, nickname) => {
 
     egen: {
       title: gender === 'male' ? '에겐남' : '에겐녀',
-      description: `따뜻한 에겐 성향 💕\n근데 혹시 카톡 보내놓고 종종 후회해? ㅋㅋ`,
+      description: `따뜻한 에겐 성향이네 💕\n그래도 어제는 안 울었지?`,
       
       traits: [
         '💖 공감능력 상담사급 - 다른 사람 감정 잘 읽고 자연스럽게 위로해주는 따뜻한 성격',
