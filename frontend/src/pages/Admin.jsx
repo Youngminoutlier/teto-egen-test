@@ -22,17 +22,17 @@ const Admin = () => {
     setLoading(true);
     console.log('=== 관리자 데이터 조회 시작 ===');
     console.log('API Base URL:', import.meta.env.VITE_API_URL);
-    
+
     try {
       const [statsData, resultsData] = await Promise.all([
         getDetailedStats(),
         getAllResults()
       ]);
-      
+
       console.log('받은 통계 데이터:', statsData);
       console.log('받은 결과 데이터:', resultsData);
       console.log('결과 개수:', resultsData.results?.length || 0);
-      
+
       setStats(statsData);
       setResults(resultsData.results || []);
     } catch (error) {
@@ -49,9 +49,74 @@ const Admin = () => {
     }
   }, [isAuthenticated]);
 
+  // 개선된 날짜 포맷 함수
   const formatDate = (dateString) => {
     if (!dateString) return '-';
-    return new Date(dateString).toLocaleString('ko-KR');
+    
+    try {
+      // 다양한 날짜 형식 처리
+      let date;
+      
+      if (typeof dateString === 'string') {
+        // ISO 형식이거나 표준 형식인지 확인
+        if (dateString.includes('T') || dateString.includes('-')) {
+          date = new Date(dateString);
+        } else {
+          // 숫자로만 이루어진 경우 타임스탬프로 처리
+          date = new Date(parseInt(dateString));
+        }
+      } else {
+        date = new Date(dateString);
+      }
+      
+      // Invalid Date 체크
+      if (isNaN(date.getTime())) {
+        console.warn('Invalid date:', dateString);
+        return dateString; // 원본 문자열 반환
+      }
+      
+      // 한국 시간으로 표시
+      return date.toLocaleString('ko-KR', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        timeZone: 'Asia/Seoul'
+      });
+    } catch (error) {
+      console.error('Date formatting error:', error, 'for date:', dateString);
+      return dateString || '-'; // 에러 시 원본 문자열 반환
+    }
+  };
+
+  // 소요 시간 계산 함수
+  const calculateDuration = (startTime, endTime) => {
+    if (!startTime || !endTime) return '-';
+    
+    try {
+      const start = new Date(startTime);
+      const end = new Date(endTime);
+      
+      if (isNaN(start.getTime()) || isNaN(end.getTime())) {
+        return '-';
+      }
+      
+      const diffMs = end.getTime() - start.getTime();
+      const diffSeconds = Math.round(diffMs / 1000);
+      
+      if (diffSeconds < 60) {
+        return `${diffSeconds}초`;
+      } else {
+        const minutes = Math.floor(diffSeconds / 60);
+        const seconds = diffSeconds % 60;
+        return `${minutes}분 ${seconds}초`;
+      }
+    } catch (error) {
+      console.error('Duration calculation error:', error);
+      return '-';
+    }
   };
 
   const getResultTypeKorean = (resultType, gender) => {
@@ -71,6 +136,7 @@ const Admin = () => {
         'legend_egen': '레전드에겐녀'
       }
     };
+
     return types[gender]?.[resultType] || resultType;
   };
 
@@ -90,7 +156,7 @@ const Admin = () => {
                 ×
               </button>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* 기본 정보 */}
               <div className="bg-gray-50 p-4 rounded-lg">
@@ -111,11 +177,7 @@ const Admin = () => {
                   <p><strong>테스트 시작:</strong> {formatDate(result.start_time)}</p>
                   <p><strong>테스트 완료:</strong> {formatDate(result.end_time)}</p>
                   <p><strong>결과 저장:</strong> {formatDate(result.created_at)}</p>
-                  <p><strong>소요 시간:</strong> {
-                    result.start_time && result.end_time ? 
-                    `${Math.round((new Date(result.end_time) - new Date(result.start_time)) / 1000)}초` : 
-                    '-'
-                  }</p>
+                  <p><strong>소요 시간:</strong> {calculateDuration(result.start_time, result.end_time)}</p>
                 </div>
               </div>
             </div>
@@ -130,7 +192,7 @@ const Admin = () => {
                       <div key={index} className="border-b pb-2">
                         <p className="font-medium">질문 {answer.questionId}:</p>
                         <p className="text-sm text-gray-600 ml-4">
-                          선택: {answer.selectedOption?.text} 
+                          선택: {answer.selectedOption?.text}
                           ({answer.value}, {answer.score}점)
                         </p>
                       </div>
@@ -231,37 +293,30 @@ const Admin = () => {
               <h3 className="text-lg font-semibold text-gray-700">전체 테스트</h3>
               <p className="text-3xl font-bold text-blue-600">{stats.total_tests}</p>
             </div>
-            
             <div className="bg-white p-6 rounded-lg shadow-md">
               <h3 className="text-lg font-semibold text-gray-700">남성 참여자</h3>
               <p className="text-3xl font-bold text-blue-600">{stats.male_count}</p>
             </div>
-            
             <div className="bg-white p-6 rounded-lg shadow-md">
               <h3 className="text-lg font-semibold text-gray-700">여성 참여자</h3>
               <p className="text-3xl font-bold text-pink-600">{stats.female_count}</p>
             </div>
-            
             <div className="bg-white p-6 rounded-lg shadow-md">
               <h3 className="text-lg font-semibold text-gray-700">밸런스</h3>
               <p className="text-3xl font-bold text-purple-600">{stats.balance_count}</p>
             </div>
-            
             <div className="bg-white p-6 rounded-lg shadow-md">
               <h3 className="text-lg font-semibold text-gray-700">레전드테토</h3>
               <p className="text-3xl font-bold text-blue-700">{stats.legend_teto_count}</p>
             </div>
-            
             <div className="bg-white p-6 rounded-lg shadow-md">
               <h3 className="text-lg font-semibold text-gray-700">테토</h3>
               <p className="text-3xl font-bold text-blue-500">{stats.teto_count}</p>
             </div>
-            
             <div className="bg-white p-6 rounded-lg shadow-md">
               <h3 className="text-lg font-semibold text-gray-700">에겐</h3>
               <p className="text-3xl font-bold text-pink-500">{stats.egen_count}</p>
             </div>
-            
             <div className="bg-white p-6 rounded-lg shadow-md">
               <h3 className="text-lg font-semibold text-gray-700">레전드에겐</h3>
               <p className="text-3xl font-bold text-pink-700">{stats.legend_egen_count}</p>
@@ -274,72 +329,70 @@ const Admin = () => {
           <div className="bg-white rounded-lg shadow-md">
             <div className="p-6 border-b">
               <h2 className="text-xl font-semibold">테스트 결과 목록 ({results.length}개)</h2>
-           </div>
-           
-           <div className="overflow-x-auto">
-             <table className="w-full">
-               <thead className="bg-gray-50">
-                 <tr>
-                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">ID</th>
-                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">닉네임</th>
-                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">성별</th>
-                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">결과</th>
-                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">점수</th>
-                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">완료 시간</th>
-                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">상세</th>
-                 </tr>
-               </thead>
-               <tbody className="divide-y divide-gray-200">
-                 {results.map((result) => (
-                   <tr key={result.id} className="hover:bg-gray-50">
-                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                       {result.id}
-                     </td>
-                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                       {result.nickname}
-                     </td>
-                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                       {result.gender === 'male' ? '👨 남성' : '👩 여성'}
-                     </td>
-                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                       {getResultTypeKorean(result.result_type, result.gender)}
-                     </td>
-                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                       테토 {result.teto_score}% / 에겐 {result.egen_score}%
-                     </td>
-                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                       {formatDate(result.created_at)}
-                     </td>
-                     <td className="px-6 py-4 whitespace-nowrap text-sm">
-                       <button
-                         onClick={() => setSelectedResult(result)}
-                         className="bg-blue-500 text-white px-3 py-1 rounded text-xs hover:bg-blue-600 transition-colors"
-                       >
-                         상세보기
-                       </button>
-                     </td>
-                   </tr>
-                 ))}
-               </tbody>
-             </table>
-             
-             {results.length === 0 && (
-               <div className="text-center py-12 text-gray-500">
-                 아직 테스트 결과가 없습니다.
-               </div>
-             )}
-           </div>
-         </div>
-       )}
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">ID</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">닉네임</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">성별</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">결과</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">점수</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">완료 시간</th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">상세</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200">
+                  {results.map((result) => (
+                    <tr key={result.id} className="hover:bg-gray-50">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        {result.id}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {result.nickname}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {result.gender === 'male' ? '👨 남성' : '👩 여성'}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {getResultTypeKorean(result.result_type, result.gender)}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        테토 {result.teto_score}% / 에겐 {result.egen_score}%
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {formatDate(result.created_at)}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm">
+                        <button
+                          onClick={() => setSelectedResult(result)}
+                          className="bg-blue-500 text-white px-3 py-1 rounded text-xs hover:bg-blue-600 transition-colors"
+                        >
+                          상세보기
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              {results.length === 0 && (
+                <div className="text-center py-12 text-gray-500">
+                  아직 테스트 결과가 없습니다.
+                </div>
+              )}
+            </div>
+          </div>
+        )}
 
-       {/* 결과 상세 모달 */}
-       <ResultDetailModal
-         result={selectedResult}
-         onClose={() => setSelectedResult(null)}
-       />
-     </div>
-   </div>
- );
+        {/* 결과 상세 모달 */}
+        <ResultDetailModal
+          result={selectedResult}
+          onClose={() => setSelectedResult(null)}
+        />
+      </div>
+    </div>
+  );
 };
 
 export default Admin;
