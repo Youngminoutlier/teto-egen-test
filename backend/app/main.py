@@ -113,6 +113,11 @@ async def get_all_test_results():
     try:
         print("=== 관리자 결과 조회 시작 ===")
         db = get_db()
+        
+        # 먼저 NULL created_at 수정
+        from .database import fix_null_created_at
+        fix_null_created_at(db)
+        
         results = get_all_results(db)
         db.close()
         
