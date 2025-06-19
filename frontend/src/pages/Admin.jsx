@@ -33,6 +33,12 @@ const Admin = () => {
       console.log('받은 결과 데이터:', resultsData);
       console.log('결과 개수:', resultsData.results?.length || 0);
 
+      // 결과 데이터 상세 로깅
+      if (resultsData.results && resultsData.results.length > 0) {
+        console.log('첫 번째 결과 샘플:', resultsData.results[0]);
+        console.log('created_at 값:', resultsData.results[0].created_at);
+      }
+
       setStats(statsData);
       setResults(resultsData.results || []);
     } catch (error) {
