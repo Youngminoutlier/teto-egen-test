@@ -111,15 +111,21 @@ async def get_stats():
 async def get_all_test_results():
     """모든 테스트 결과 조회 (관리자용)"""
     try:
+        print("=== 관리자 결과 조회 시작 ===")
         db = get_db()
         results = get_all_results(db)
         db.close()
+        
+        print(f"조회된 결과 개수: {len(results)}")
+        if results:
+            print(f"첫 번째 결과 샘플: {results[0]}")
         
         return {
             "success": True,
             "results": results
         }
     except Exception as e:
+        print(f"결과 조회 오류: {e}")
         raise HTTPException(status_code=500, detail=f"결과 조회 실패: {str(e)}")
 
 @app.get("/api/admin/stats")
