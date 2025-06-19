@@ -83,15 +83,20 @@ def save_result(db, result_data):
     """테스트 결과 저장"""
     try:
         database_url = get_database_url()
+        current_time = datetime.now()
+        
+        print(f"=== 결과 저장 시작 ===")
+        print(f"현재 시간: {current_time}")
+        print(f"저장할 데이터: {result_data}")
         
         if database_url.startswith('postgres://') or database_url.startswith('postgresql://'):
-            # PostgreSQL용 INSERT
+            # PostgreSQL용 INSERT - created_at 명시적 설정
             with db.cursor() as cursor:
                 cursor.execute('''
                     INSERT INTO test_results
-                    (nickname, gender, teto_score, egen_score, result_type, answers, start_time, end_time)
-                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-                    RETURNING id
+                    (nickname, gender, teto_score, egen_score, result_type, answers, start_time, end_time, created_at)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+                    RETURNING id, created_at
                 ''', (
                     result_data['nickname'],
                     result_data['gender'],
@@ -100,15 +105,19 @@ def save_result(db, result_data):
                     result_data['resultType'],
                     json.dumps(result_data.get('answers', [])),
                     result_data.get('startTime'),
-                    result_data.get('endTime')
+                    result_data.get('endTime'),
+                    current_time  # 명시적으로 현재 시간 설정
                 ))
-                result_id = cursor.fetchone()['id']
+                row = cursor.fetchone()
+                result_id = row['id']
+                saved_created_at = row['created_at']
+                print(f"저장된 ID: {result_id}, 저장된 created_at: {saved_created_at}")
         else:
             # SQLite용 INSERT
             cursor = db.execute('''
                 INSERT INTO test_results
-                (nickname, gender, teto_score, egen_score, result_type, answers, start_time, end_time)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                (nickname, gender, teto_score, egen_score, result_type, answers, start_time, end_time, created_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
             ''', (
                 result_data['nickname'],
                 result_data['gender'],
@@ -117,14 +126,18 @@ def save_result(db, result_data):
                 result_data['resultType'],
                 json.dumps(result_data.get('answers', [])),
                 result_data.get('startTime'),
-                result_data.get('endTime')
+                result_data.get('endTime'),
+                current_time.isoformat()  # ISO 형식으로 저장
             ))
             result_id = cursor.lastrowid
+            print(f"SQLite 저장된 ID: {result_id}")
         
         db.commit()
+        print(f"=== 결과 저장 완료: {result_id} ===")
         return result_id
         
     except Exception as e:
+        print(f"저장 오류: {e}")
         db.rollback()
         raise e
 
@@ -132,53 +145,55 @@ def get_all_results(db):
     """모든 테스트 결과 조회"""
     try:
         database_url = get_database_url()
+        print("=== 결과 조회 시작 ===")
         
         if database_url.startswith('postgres://') or database_url.startswith('postgresql://'):
-            # PostgreSQL용 SELECT - 타임존 포함하여 조회
+            # PostgreSQL용 SELECT - 간단하게 처리
             with db.cursor() as cursor:
                 cursor.execute('''
                     SELECT id, nickname, gender, teto_score, egen_score, result_type,
-                           answers, start_time, end_time, 
-                           to_char(created_at AT TIME ZONE 'Asia/Seoul', 'YYYY-MM-DD"T"HH24:MI:SS') as created_at_formatted,
-                           created_at
+                           answers, start_time, end_time, created_at
                     FROM test_results
-                    ORDER BY created_at DESC
+                    ORDER BY id DESC
                 ''')
                 rows = cursor.fetchall()
+                print(f"PostgreSQL에서 조회된 rows: {len(rows)}")
+                if rows:
+                    print(f"첫 번째 row 원본: {dict(rows[0])}")
         else:
             # SQLite용 SELECT
             cursor = db.execute('''
                 SELECT id, nickname, gender, teto_score, egen_score, result_type,
                        answers, start_time, end_time, created_at
                 FROM test_results
-                ORDER BY created_at DESC
+                ORDER BY id DESC
             ''')
             rows = cursor.fetchall()
+            print(f"SQLite에서 조회된 rows: {len(rows)}")
         
         results = []
         for row in rows:
-            # PostgreSQL의 경우 formatted 시간 사용, SQLite는 기존 방식
+            # created_at 처리 - 더 간단하게
             created_at_value = None
+            raw_created_at = row.get('created_at') or row['created_at'] if hasattr(row, '__getitem__') else getattr(row, 'created_at', None)
             
-            if database_url.startswith('postgres://') or database_url.startswith('postgresql://'):
-                # PostgreSQL: formatted 값 사용
-                created_at_value = row.get('created_at_formatted')
-                if not created_at_value and row.get('created_at'):
-                    # fallback: created_at 직접 사용
-                    try:
-                        created_at_value = row['created_at'].strftime('%Y-%m-%dT%H:%M:%S')
-                    except:
-                        created_at_value = str(row['created_at'])
-            else:
-                # SQLite: 기존 방식
-                if row['created_at']:
-                    try:
-                        if isinstance(row['created_at'], str):
-                            created_at_value = datetime.fromisoformat(row['created_at'].replace('Z', '+00:00')).isoformat()
-                        else:
-                            created_at_value = row['created_at'].isoformat()
-                    except:
-                        created_at_value = str(row['created_at'])
+            print(f"원본 created_at 값: {raw_created_at}, 타입: {type(raw_created_at)}")
+            
+            if raw_created_at:
+                try:
+                    if isinstance(raw_created_at, datetime):
+                        # datetime 객체인 경우
+                        created_at_value = raw_created_at.strftime('%Y-%m-%dT%H:%M:%S')
+                    elif isinstance(raw_created_at, str):
+                        # 문자열인 경우
+                        created_at_value = raw_created_at
+                    else:
+                        created_at_value = str(raw_created_at)
+                    
+                    print(f"변환된 created_at: {created_at_value}")
+                except Exception as e:
+                    print(f"created_at 변환 오류: {e}")
+                    created_at_value = str(raw_created_at) if raw_created_at else None
             
             result = {
                 "id": row['id'],
@@ -194,10 +209,59 @@ def get_all_results(db):
             }
             results.append(result)
         
+        print(f"=== 결과 조회 완료: {len(results)}개 ===")
         return results
         
     except Exception as e:
         print(f"get_all_results 오류: {e}")
+        raise e
+
+def fix_null_created_at(db):
+    """NULL인 created_at 필드를 현재 시간으로 업데이트"""
+    try:
+        database_url = get_database_url()
+        current_time = datetime.now()
+        
+        print("=== NULL created_at 수정 시작 ===")
+        
+        if database_url.startswith('postgres://') or database_url.startswith('postgresql://'):
+            with db.cursor() as cursor:
+                # NULL인 레코드 수 확인
+                cursor.execute("SELECT COUNT(*) as count FROM test_results WHERE created_at IS NULL")
+                null_count = cursor.fetchone()['count']
+                print(f"NULL created_at 레코드 수: {null_count}")
+                
+                if null_count > 0:
+                    # NULL인 created_at을 현재 시간으로 업데이트
+                    cursor.execute('''
+                        UPDATE test_results 
+                        SET created_at = %s 
+                        WHERE created_at IS NULL
+                    ''', (current_time,))
+                    
+                    updated_rows = cursor.rowcount
+                    print(f"업데이트된 레코드 수: {updated_rows}")
+        else:
+            # SQLite용
+            cursor = db.execute("SELECT COUNT(*) FROM test_results WHERE created_at IS NULL")
+            null_count = cursor.fetchone()[0]
+            print(f"NULL created_at 레코드 수: {null_count}")
+            
+            if null_count > 0:
+                db.execute('''
+                    UPDATE test_results 
+                    SET created_at = ? 
+                    WHERE created_at IS NULL
+                ''', (current_time.isoformat(),))
+                
+                print(f"SQLite 업데이트 완료")
+        
+        db.commit()
+        print("=== NULL created_at 수정 완료 ===")
+        
+    except Exception as e:
+        print(f"NULL created_at 수정 오류: {e}")
+        db.rollback()
         raise e
 
 def get_detailed_stats(db):
