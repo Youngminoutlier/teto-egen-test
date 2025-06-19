@@ -4,7 +4,8 @@ from fastapi.responses import JSONResponse
 import uvicorn
 import os
 from datetime import datetime
-from .database import get_db, save_result, get_all_results
+
+from .database import get_db, save_result, get_all_results, init_db
 from .models import TestResult
 
 app = FastAPI(
@@ -28,19 +29,34 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# 앱 시작 시 데이터베이스 초기화
+@app.on_event("startup")
+async def startup_event():
+    """앱 시작 시 데이터베이스 초기화"""
+    try:
+        init_db()
+        print("데이터베이스 초기화가 완료되었습니다.")
+    except Exception as e:
+        print(f"데이터베이스 초기화 실패: {e}")
+
 @app.get("/")
 async def health_check():
     """헬스체크 엔드포인트"""
     return {
         "status": "ok",
         "message": "테토/에겐 테스트 API 서버가 정상 작동 중입니다.",
-        "timestamp": datetime.now().isoformat()
+        "timestamp": datetime.now().isoformat(),
+        "database": "PostgreSQL" if os.getenv('DATABASE_URL', '').startswith('postgres') else "SQLite"
     }
 
 @app.get("/api/health")
 async def api_health():
     """API 헬스체크"""
-    return {"status": "healthy", "service": "teto-egen-test"}
+    return {
+        "status": "healthy", 
+        "service": "teto-egen-test",
+        "database_connected": True
+    }
 
 @app.get("/api/questions")
 async def get_questions():
@@ -56,6 +72,7 @@ async def submit_result(result: TestResult):
     try:
         db = get_db()
         result_id = save_result(db, result.dict())
+        db.close()
         
         return {
             "success": True,
@@ -70,15 +87,25 @@ async def get_stats():
     """간단한 통계 정보 (선택사항)"""
     try:
         db = get_db()
-        # 간단한 통계 쿼리
-        total_results = db.execute("SELECT COUNT(*) FROM test_results").fetchone()[0]
+        
+        # PostgreSQL과 SQLite 호환 쿼리
+        database_url = os.getenv('DATABASE_URL', '')
+        if database_url.startswith('postgres://') or database_url.startswith('postgresql://'):
+            with db.cursor() as cursor:
+                cursor.execute("SELECT COUNT(*) as count FROM test_results")
+                total_results = cursor.fetchone()['count']
+        else:
+            cursor = db.execute("SELECT COUNT(*) FROM test_results")
+            total_results = cursor.fetchone()[0]
+        
+        db.close()
         
         return {
             "total_tests": total_results,
             "message": "통계 정보"
         }
     except Exception as e:
-        return {"total_tests": 0, "message": "통계를 불러올 수 없습니다."}
+        return {"total_tests": 0, "message": f"통계를 불러올 수 없습니다: {str(e)}"}
 
 @app.get("/api/admin/results")
 async def get_all_test_results():
@@ -101,32 +128,14 @@ async def get_detailed_stats():
     try:
         db = get_db()
         
-        # 전체 통계
-        total_results = db.execute("SELECT COUNT(*) FROM test_results").fetchone()[0]
-        
-        # 성별별 통계
-        male_count = db.execute("SELECT COUNT(*) FROM test_results WHERE gender = 'male'").fetchone()[0]
-        female_count = db.execute("SELECT COUNT(*) FROM test_results WHERE gender = 'female'").fetchone()[0]
-        
-        # 결과 타입별 통계
-        legend_teto_count = db.execute("SELECT COUNT(*) FROM test_results WHERE result_type = 'legend_teto'").fetchone()[0]
-        teto_count = db.execute("SELECT COUNT(*) FROM test_results WHERE result_type = 'teto'").fetchone()[0]
-        balance_count = db.execute("SELECT COUNT(*) FROM test_results WHERE result_type = 'balance'").fetchone()[0]
-        egen_count = db.execute("SELECT COUNT(*) FROM test_results WHERE result_type = 'egen'").fetchone()[0]
-        legend_egen_count = db.execute("SELECT COUNT(*) FROM test_results WHERE result_type = 'legend_egen'").fetchone()[0]
+        # get_detailed_stats 함수 사용
+        from .database import get_detailed_stats
+        stats = get_detailed_stats(db)
         
         db.close()
         
-        return {
-            "total_tests": total_results,
-            "male_count": male_count,
-            "female_count": female_count,
-            "legend_teto_count": legend_teto_count,
-            "teto_count": teto_count,
-            "balance_count": balance_count,
-            "egen_count": egen_count,
-            "legend_egen_count": legend_egen_count
-        }
+        return stats
+        
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"통계 조회 실패: {str(e)}")
 
