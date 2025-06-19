@@ -138,7 +138,8 @@ def get_all_results(db):
             with db.cursor() as cursor:
                 cursor.execute('''
                     SELECT id, nickname, gender, teto_score, egen_score, result_type,
-                           answers, start_time, end_time, created_at
+                           answers, start_time, end_time, 
+                           created_at AT TIME ZONE 'UTC' AT TIME ZONE 'Asia/Seoul' as created_at
                     FROM test_results
                     ORDER BY created_at DESC
                 ''')
@@ -155,6 +156,19 @@ def get_all_results(db):
         
         results = []
         for row in rows:
+            # 날짜 형식 안전하게 처리
+            created_at_iso = None
+            if row['created_at']:
+                try:
+                    if isinstance(row['created_at'], str):
+                        # 문자열인 경우 ISO 형식으로 변환
+                        created_at_iso = datetime.fromisoformat(row['created_at'].replace('Z', '+00:00')).isoformat()
+                    else:
+                        # datetime 객체인 경우 ISO 형식으로 변환
+                        created_at_iso = row['created_at'].isoformat()
+                except:
+                    created_at_iso = str(row['created_at'])
+            
             result = {
                 "id": row['id'],
                 "nickname": row['nickname'],
@@ -165,7 +179,7 @@ def get_all_results(db):
                 "answers": json.loads(row['answers']) if row['answers'] else [],
                 "start_time": row['start_time'],
                 "end_time": row['end_time'],
-                "created_at": str(row['created_at'])
+                "created_at": created_at_iso
             }
             results.append(result)
         
