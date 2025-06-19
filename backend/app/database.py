@@ -83,14 +83,18 @@ def save_result(db, result_data):
     """테스트 결과 저장"""
     try:
         database_url = get_database_url()
-        current_time = datetime.now()
+        
+        # 한국 시간으로 현재 시간 설정 (UTC+9)
+        import pytz
+        kst = pytz.timezone('Asia/Seoul')
+        current_time_kst = datetime.now(kst)
         
         print(f"=== 결과 저장 시작 ===")
-        print(f"현재 시간: {current_time}")
+        print(f"한국 시간: {current_time_kst}")
         print(f"저장할 데이터: {result_data}")
         
         if database_url.startswith('postgres://') or database_url.startswith('postgresql://'):
-            # PostgreSQL용 INSERT - created_at 명시적 설정
+            # PostgreSQL용 INSERT - 한국 시간으로 명시적 설정
             with db.cursor() as cursor:
                 cursor.execute('''
                     INSERT INTO test_results
@@ -106,14 +110,14 @@ def save_result(db, result_data):
                     json.dumps(result_data.get('answers', [])),
                     result_data.get('startTime'),
                     result_data.get('endTime'),
-                    current_time  # 명시적으로 현재 시간 설정
+                    current_time_kst  # 한국 시간으로 저장
                 ))
                 row = cursor.fetchone()
                 result_id = row['id']
                 saved_created_at = row['created_at']
                 print(f"저장된 ID: {result_id}, 저장된 created_at: {saved_created_at}")
         else:
-            # SQLite용 INSERT
+            # SQLite용 INSERT - 한국 시간
             cursor = db.execute('''
                 INSERT INTO test_results
                 (nickname, gender, teto_score, egen_score, result_type, answers, start_time, end_time, created_at)
@@ -127,7 +131,7 @@ def save_result(db, result_data):
                 json.dumps(result_data.get('answers', [])),
                 result_data.get('startTime'),
                 result_data.get('endTime'),
-                current_time.isoformat()  # ISO 형식으로 저장
+                current_time_kst.strftime('%Y-%m-%d %H:%M:%S')  # 한국 시간으로 저장
             ))
             result_id = cursor.lastrowid
             print(f"SQLite 저장된 ID: {result_id}")
@@ -217,12 +221,16 @@ def get_all_results(db):
         raise e
 
 def fix_null_created_at(db):
-    """NULL인 created_at 필드를 현재 시간으로 업데이트"""
+    """NULL이거나 UTC 시간인 created_at 필드를 한국 시간으로 업데이트"""
     try:
         database_url = get_database_url()
-        current_time = datetime.now()
         
-        print("=== NULL created_at 수정 시작 ===")
+        # 한국 시간으로 현재 시간 설정
+        import pytz
+        kst = pytz.timezone('Asia/Seoul')
+        current_time_kst = datetime.now(kst)
+        
+        print("=== created_at 한국 시간 수정 시작 ===")
         
         if database_url.startswith('postgres://') or database_url.startswith('postgresql://'):
             with db.cursor() as cursor:
@@ -231,18 +239,50 @@ def fix_null_created_at(db):
                 null_count = cursor.fetchone()['count']
                 print(f"NULL created_at 레코드 수: {null_count}")
                 
+                # UTC 시간으로 저장된 레코드들을 한국 시간으로 변환
+                cursor.execute('''
+                    SELECT id, created_at 
+                    FROM test_results 
+                    WHERE created_at IS NOT NULL
+                ''')
+                utc_records = cursor.fetchall()
+                
+                updated_count = 0
+                for record in utc_records:
+                    try:
+                        utc_time = record['created_at']
+                        if utc_time.tzinfo is None:
+                            # naive datetime을 UTC로 간주하고 한국 시간으로 변환
+                            utc_time = pytz.UTC.localize(utc_time)
+                        
+                        # 한국 시간으로 변환
+                        kst_time = utc_time.astimezone(kst)
+                        
+                        cursor.execute('''
+                            UPDATE test_results 
+                            SET created_at = %s 
+                            WHERE id = %s
+                        ''', (kst_time, record['id']))
+                        
+                        updated_count += 1
+                        print(f"ID {record['id']}: {utc_time} → {kst_time}")
+                        
+                    except Exception as e:
+                        print(f"ID {record['id']} 변환 오류: {e}")
+                
+                # NULL인 레코드들을 현재 한국 시간으로 업데이트
                 if null_count > 0:
-                    # NULL인 created_at을 현재 시간으로 업데이트
                     cursor.execute('''
                         UPDATE test_results 
                         SET created_at = %s 
                         WHERE created_at IS NULL
-                    ''', (current_time,))
-                    
-                    updated_rows = cursor.rowcount
-                    print(f"업데이트된 레코드 수: {updated_rows}")
+                    ''', (current_time_kst,))
+                
+                print(f"UTC→KST 변환된 레코드 수: {updated_count}")
+                print(f"NULL→KST 업데이트된 레코드 수: {null_count}")
+                
         else:
-            # SQLite용
+            # SQLite용 - 간단한 NULL 처리만
             cursor = db.execute("SELECT COUNT(*) FROM test_results WHERE created_at IS NULL")
             null_count = cursor.fetchone()[0]
             print(f"NULL created_at 레코드 수: {null_count}")
@@ -252,15 +292,15 @@ def fix_null_created_at(db):
                     UPDATE test_results 
                     SET created_at = ? 
                     WHERE created_at IS NULL
-                ''', (current_time.isoformat(),))
+                ''', (current_time_kst.strftime('%Y-%m-%d %H:%M:%S'),))
                 
-                print(f"SQLite 업데이트 완료")
+                print(f"SQLite NULL→KST 업데이트 완료")
         
         db.commit()
-        print("=== NULL created_at 수정 완료 ===")
+        print("=== created_at 한국 시간 수정 완료 ===")
         
     except Exception as e:
-        print(f"NULL created_at 수정 오류: {e}")
+        print(f"created_at 수정 오류: {e}")
         db.rollback()
         raise e
 
