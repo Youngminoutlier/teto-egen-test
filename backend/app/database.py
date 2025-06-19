@@ -134,12 +134,13 @@ def get_all_results(db):
         database_url = get_database_url()
         
         if database_url.startswith('postgres://') or database_url.startswith('postgresql://'):
-            # PostgreSQL용 SELECT
+            # PostgreSQL용 SELECT - 타임존 포함하여 조회
             with db.cursor() as cursor:
                 cursor.execute('''
                     SELECT id, nickname, gender, teto_score, egen_score, result_type,
                            answers, start_time, end_time, 
-                           created_at AT TIME ZONE 'UTC' AT TIME ZONE 'Asia/Seoul' as created_at
+                           to_char(created_at AT TIME ZONE 'Asia/Seoul', 'YYYY-MM-DD"T"HH24:MI:SS') as created_at_formatted,
+                           created_at
                     FROM test_results
                     ORDER BY created_at DESC
                 ''')
@@ -156,18 +157,28 @@ def get_all_results(db):
         
         results = []
         for row in rows:
-            # 날짜 형식 안전하게 처리
-            created_at_iso = None
-            if row['created_at']:
-                try:
-                    if isinstance(row['created_at'], str):
-                        # 문자열인 경우 ISO 형식으로 변환
-                        created_at_iso = datetime.fromisoformat(row['created_at'].replace('Z', '+00:00')).isoformat()
-                    else:
-                        # datetime 객체인 경우 ISO 형식으로 변환
-                        created_at_iso = row['created_at'].isoformat()
-                except:
-                    created_at_iso = str(row['created_at'])
+            # PostgreSQL의 경우 formatted 시간 사용, SQLite는 기존 방식
+            created_at_value = None
+            
+            if database_url.startswith('postgres://') or database_url.startswith('postgresql://'):
+                # PostgreSQL: formatted 값 사용
+                created_at_value = row.get('created_at_formatted')
+                if not created_at_value and row.get('created_at'):
+                    # fallback: created_at 직접 사용
+                    try:
+                        created_at_value = row['created_at'].strftime('%Y-%m-%dT%H:%M:%S')
+                    except:
+                        created_at_value = str(row['created_at'])
+            else:
+                # SQLite: 기존 방식
+                if row['created_at']:
+                    try:
+                        if isinstance(row['created_at'], str):
+                            created_at_value = datetime.fromisoformat(row['created_at'].replace('Z', '+00:00')).isoformat()
+                        else:
+                            created_at_value = row['created_at'].isoformat()
+                    except:
+                        created_at_value = str(row['created_at'])
             
             result = {
                 "id": row['id'],
@@ -179,13 +190,14 @@ def get_all_results(db):
                 "answers": json.loads(row['answers']) if row['answers'] else [],
                 "start_time": row['start_time'],
                 "end_time": row['end_time'],
-                "created_at": created_at_iso
+                "created_at": created_at_value
             }
             results.append(result)
         
         return results
         
     except Exception as e:
+        print(f"get_all_results 오류: {e}")
         raise e
 
 def get_detailed_stats(db):
