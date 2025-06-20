@@ -109,11 +109,11 @@ export const QUESTIONS = [
   },
   {
     id: 13,
-    text: "길에서 넘어졌는데 사람들이 쳐다봐. 어떻게 반응할 거야?",
+    text: "인스타그램 피드나 스토리를 올릴 때, 주로 어떤 마음가짐이야?",
     options: [
-      { text: "의도했던 것처럼 자연스럽게 춤추면서 일어남 ㅋ", value: "teto", score: 2 },
-      { text: "빨리 일어나서 무릎 털고 자연스럽게 가던 길 가기", value: "neutral", score: 0 },
-      { text: "얼굴 빨개져서 앞만 보고 후다닥 도망가기", value: "egen", score: 2 }
+      { text: "내 일상이나 생각을 솔직하게 보여주는 게 중요함. 남들 시선은 신경 안 씀 ㅋ", value: "teto", score: 2 },
+      { text: "그냥 그때그때 올리고 싶은 거 올림. 크게 의미 두지 않음.", value: "neutral", score: 0 },
+      { text: "다른 사람들이 어떻게 볼지, 혹시 불편해하진 않을지 한 번 더 생각하고 올림..", value: "egen", score: 2 }
     ]
   },
   {
