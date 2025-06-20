@@ -22,18 +22,18 @@ export const calculateResult = (answers, gender) => {
   const adjustedTetoPercentage = total > 0 ? Math.round((tetoPercentage / total) * 100) : 50
   const adjustedEgenPercentage = 100 - adjustedTetoPercentage
 
-  // 결과 타입 결정 - 더 엄격한 밸런스 기준
+  // 결과 타입 결정 - 높은 점수부터 먼저 체크 (수정됨)
   let resultType
   if (adjustedTetoPercentage >= 80) {
     resultType = 'legend_teto'  // 테토 80% 이상
+  } else if (adjustedEgenPercentage >= 80) {
+    resultType = 'legend_egen'  // 에겐 80% 이상 (순서 수정!)
   } else if (adjustedTetoPercentage >= 65) {
     resultType = 'teto'         // 테토 65-79%
+  } else if (adjustedEgenPercentage >= 65) {
+    resultType = 'egen'         // 에겐 65-79%
   } else if (adjustedTetoPercentage >= 45 && adjustedTetoPercentage <= 55) {
     resultType = 'balance'      // 테토 45-55% (차이 10% 이내)
-  } else if (adjustedEgenPercentage >= 65) {
-    resultType = 'egen'         // 에겐 65% 이상 (= 테토 35% 미만)
-  } else if (adjustedEgenPercentage >= 80) {
-    resultType = 'legend_egen'  // 에겐 80% 이상
   } else {
     // 45% 미만 55% 초과 65% 미만인 애매한 구간
     if (adjustedTetoPercentage > 55) {
