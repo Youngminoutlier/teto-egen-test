@@ -30,9 +30,9 @@ export const QUESTIONS = [
     id: 4,
     text: "길에서 전 애인을 마주쳤어. 상대방도 나를 봤어. 어떻게 할 거야?",
     options: [
-      { text: "당당하게 \"오 안녕?\" 하고 먼저 인사", value: "teto", score: 3 },
+      { text: "당당하게 \"오 안녕?\" 하고 먼저 인사", value: "teto", score: 2 },
       { text: "애매하게 눈인사만 하고 지나가기", value: "neutral", score: 0 },
-      { text: "못 본 척하고 다른 길로 슬금슬금", value: "egen", score: 3 }
+      { text: "못 본 척하고 다른 길로 슬금슬금", value: "egen", score: 2 }
     ]
   },
   {
@@ -57,9 +57,9 @@ export const QUESTIONS = [
     id: 7,
     text: "밤에 배고픈데 야식으로 뭘 먹을지 개고민됨..",
     options: [
-      { text: "\"일단 시켜! 내일부터 운동 더 하면 되지 ㅋ\"", value: "teto", score: 3 },
+      { text: "\"일단 시켜! 내일부터 운동 더 하면 되지 ㅋ\"", value: "teto", score: 2 },
       { text: "일단 냉장고 열어보고 있는 거 아무거나 먹음", value: "neutral", score: 0 },
-      { text: "\"샐러드.. 아니 치킨 ..? 음 샐러드..?\" 계속 고민함", value: "egen", score: 3 }
+      { text: "\"샐러드.. 아니 치킨 ..? 음 샐러드..?\" 계속 고민함", value: "egen", score: 2 }
     ]
   },
   {
@@ -111,9 +111,9 @@ export const QUESTIONS = [
     id: 13,
     text: "인스타그램 피드나 스토리를 올릴 때, 주로 어떤 마음가짐이야?",
     options: [
-      { text: "내 일상이나 생각을 솔직하게 보여주는 게 중요함. 남들 시선은 신경 안 씀 ㅋ", value: "teto", score: 2 },
+      { text: "내 일상이나 생각을 솔직하게 보여주는 게 중요함. 남들 시선은 신경 안 씀 ㅋ", value: "teto", score: 3 },
       { text: "그냥 그때그때 올리고 싶은 거 올림. 크게 의미 두지 않음.", value: "neutral", score: 0 },
-      { text: "다른 사람들이 어떻게 볼지, 혹시 불편해하진 않을지 한 번 더 생각하고 올림..", value: "egen", score: 2 }
+      { text: "다른 사람들이 어떻게 볼지, 혹시 불편해하진 않을지 한 번 더 생각하고 올림..", value: "egen", score: 3 }
     ]
   },
   {
@@ -165,9 +165,9 @@ export const QUESTIONS = [
     id: 19,
     text: "나의 평소 패션 스타일은 주로 어떤 느낌에 가까워?",
     options: [
-      { text: "깔끔하고 편하면 장땡! 시간 낭비 싫어", value: "teto", score: 2 },
+      { text: "깔끔하고 편하면 장땡! 시간 낭비 싫어", value: "teto", score: 3 },
       { text: "유행을 따르기보다는 무난하고 깔끔한 기본 스타일", value: "neutral", score: 0 },
-      { text: "오늘 기분이나 만나는 사람에 맞춰 신경 써서 입음", value: "egen", score: 2 }
+      { text: "오늘 기분이나 만나는 사람에 맞춰 신경 써서 입음", value: "egen", score: 3 }
     ]
   },
   {
