@@ -108,7 +108,7 @@ export const getResultText = (resultType, gender, nickname) => {
 
     legend_egen: {
       title: gender === 'male' ? '레전드에겐남' : '레전드에겐녀',
-      description: `와 에겐 극강이네 지린다 ㄷㄷ 진짜 천사 같은 성격!!😇\n혹시 어제도 울었어? ㅋㅋ`,
+      description: `와 에겐 극강이네 지린다 ㄷㄷ \n진짜 천사 같은 성격!!😇\n혹시 어제도 울었어? ㅋㅋ`,
       
       traits: [
         '💝 공감능력 레전드급 - 거의 마음 읽는 수준이야 미묘한 표정변화도 다 캐치하는 섬세함의 끝판왕',
